@@ -1,0 +1,19 @@
+{
+  "name": "js-sandbox",
+  "version": "0.0.1",
+  "description": "Live code editor for JS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sivadass/js-sandbox.git"
+  },
+  "author": "Sivadass N",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sivadass/js-sandbox/issues"
+  },
+  "homepage": "https://github.com/sivadass/js-sandbox#readme"
+}
