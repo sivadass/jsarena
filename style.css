@@ -41,12 +41,14 @@ header h1 {
   width: 100%;
   height: calc(100vh - 40px);
 }
-.code,
+
 .preview {
-  width: 50%;
+  width: 0;
+  visibility: hidden;
 }
 .code {
   background: #444;
+  width: 100%;
 }
 .code textarea {
   display: block;
