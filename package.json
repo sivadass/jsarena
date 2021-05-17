@@ -1,5 +1,5 @@
 {
-  "name": "js-sandbox",
+  "name": "js-console",
   "version": "0.0.1",
   "description": "Live code editor for JS",
   "main": "index.js",
@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sivadass/js-sandbox.git"
+    "url": "git+https://github.com/sivadass/js-console.git"
   },
   "author": "Sivadass N",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sivadass/js-sandbox/issues"
+    "url": "https://github.com/sivadass/js-console/issues"
   },
-  "homepage": "https://github.com/sivadass/js-sandbox#readme"
+  "homepage": "https://github.com/sivadass/js-console#readme"
 }
