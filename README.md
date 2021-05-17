@@ -7,7 +7,6 @@ A minimal live code editor for Javascript.
 ### Live URL
 
 - [https://js-console.ml](https://js-console.ml)
-- [https://js-console.netlify.app](https://js-console.netlify.app)
 
 ### Development
 
