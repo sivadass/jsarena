@@ -1,14 +1,14 @@
-body {
-  font-size: 16px;
-  font-family: "IBM Plex Mono", monospace;
-  padding: 0;
-  margin: 0;
-}
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+  font-family: "PT Mono", monospace;
+  padding: 0;
+  margin: 0;
 }
 
 a {
@@ -19,12 +19,14 @@ header {
   background: #232323;
   color: #fff;
 }
+
 header .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 16px;
 }
+
 header h1 {
   font-size: 20px;
   line-height: 24px;
@@ -32,6 +34,7 @@ header h1 {
   font-weight: normal;
   color: #ccc;
 }
+
 .run {
   border: none;
   background: transparent;
@@ -40,6 +43,7 @@ header h1 {
   font-size: 24px;
   cursor: pointer;
 }
+
 .main-container {
   display: flex;
   width: 100%;
@@ -50,10 +54,12 @@ header h1 {
   width: 0;
   visibility: hidden;
 }
+
 .code {
   background: #444;
   width: 100%;
 }
+
 .code textarea {
   display: block;
   height: 100%;
@@ -64,14 +70,17 @@ header h1 {
   font-size: 18px;
   padding: 16px;
 }
+
 .code textarea:focus,
 .code textarea:active {
   outline: none;
   box-shadow: none;
 }
+
 .preview {
   background: #fff;
 }
+
 iframe {
   border: none;
   width: 100%;
