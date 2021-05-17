@@ -27,12 +27,8 @@ header .container {
   padding: 0 16px;
 }
 
-header h1 {
-  font-size: 20px;
-  line-height: 24px;
-  padding: 8px 0;
-  font-weight: normal;
-  color: #ccc;
+header img {
+  width: 96px;
 }
 
 .run {
