@@ -27,7 +27,7 @@ mongoose
     useUnifiedTopology: true,
     useCreateIndex: true,
   })
-  .then(() => console.log("🌍  : Connected to Mongo DB 🔥"))
+  .then(() => console.log("🌍  => Connected to Mongo DB 🔥"))
   .catch((err) => console.log(err));
 
 // Express Middlewares
@@ -49,5 +49,5 @@ app.get("/", function (_, res) {
 });
 
 app.listen(PORT_NUMBER, () =>
-  console.log("🌍  : JS Console API server is on 🔥")
+  console.log("🌍  => JS Console API server is on 🔥")
 );
