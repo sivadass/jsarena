@@ -8,25 +8,31 @@
   <meta name="author" content="Sivadass N">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="../favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../styles/editor.css">
 </head>
 
 <body>
   <header>
     <div class="container">
       <a href="https://js-console.ml">
-        <img src="/logo.png" alt="JS Console" />
+        <img src="../images/logo.png" alt="JS Console" />
       </a>
       <button title="Check output in devtool's console" class="run">&#9658;</button>
     </div>
   </header>
-  <main class="container">
-    <h1>Welcome to JS Console</h1>
-    <button class="create">Open Editor</button>
-    <!-- <a href="/editor?id=12345">Open Editor</a> -->
+  <main class="main-container">
+    <div class="code">
+      <textarea
+        id="jsCode"
+        placeholder="Please use your devtool's console for output." 
+      ></textarea>	
+    </div>
+    <div class="preview">
+      <iframe id="output"></iframe>
+    </div>
   </main>
-  <script src="script.js"></script>
+  <script src="../scripts/editor.js"></script>
 </body>
 </html>

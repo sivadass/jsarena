@@ -4,7 +4,8 @@
   "description": "Live code editor for JS",
   "main": "index.js",
   "scripts": {
-    "start": "python -m SimpleHTTPServer 3001"
+    "start": "parcel serve ./src/pages/*.html",
+    "build": "parcel build ./src/pages/*.html"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/sivadass/js-console/issues"
   },
-  "homepage": "https://github.com/sivadass/js-console#readme"
+  "homepage": "https://github.com/sivadass/js-console#readme",
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.2"
+  }
 }
