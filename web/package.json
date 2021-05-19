@@ -2,8 +2,7 @@
   "name": "js-console",
   "version": "0.0.1",
   "description": "Live code editor for JS",
-  "main": "index.js",
-  "scripts": {
+    "scripts": {
     "start": "parcel serve ./src/pages/*.html",
     "build": "parcel build ./src/pages/*.html"
   },
