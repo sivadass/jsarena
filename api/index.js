@@ -6,12 +6,8 @@ const dotenv = require("dotenv");
 const path = require("path");
 
 // import routes
-const authRoute = require("./routes/auth");
-const collectionRoute = require("./routes/collection");
-const paymentRoute = require("./routes/payment");
-const expenseRoute = require("./routes/expense");
-const categoryRoute = require("./routes/category");
-const flatRoute = require("./routes/flat");
+const userRoute = require("./routes/user");
+const projectRoute = require("./routes/project");
 
 // Backend Port Number
 const PORT_NUMBER = process.env.PORT || 5001;
@@ -37,12 +33,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/static", express.static(path.join(__dirname, "public")));
 
 // Route Middlewares
-app.use("/api/v1/user", authRoute);
-app.use("/api/v1/collection", collectionRoute);
-app.use("/api/v1/payment", paymentRoute);
-app.use("/api/v1/expense", expenseRoute);
-app.use("/api/v1/category", categoryRoute);
-app.use("/api/v1/flat", flatRoute);
+app.use("/api/v1/user", userRoute);
+app.use("/api/v1/project", projectRoute);
 
 app.get("/", function (_, res) {
   res.sendFile(path.join(__dirname + "/public/index.html"));

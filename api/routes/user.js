@@ -23,8 +23,6 @@ router.post("/register", async (req, res) => {
     email: req.body.email,
     password: hashPassword,
     role: req.body.role,
-    phoneNumber: req.body.phoneNumber,
-    flat: req.body.flat,
   });
 
   try {
@@ -32,10 +30,10 @@ router.post("/register", async (req, res) => {
     const msg = {
       to: `${savedUser.name} <${savedUser.email}>`,
       from: `JS Console <no-reply@jsconsole.ml>`,
-      subject: `Welcome to JS Console Apartment Association`,
+      subject: `Welcome to JS Console`,
       html: plainMessageTemplate(
         `Hi ${savedUser.name},`,
-        `You have been added to the JS Console Apartment Association. <br/> <br/> You can pay all your monthly maintenance charges and track how your money was utilized using this app. <br/><br/> Your login details are below: <br/> Username: <b>${savedUser.email}</b> <br/> Password: <b>${savedUser.phoneNumber}</b>. <br/><br/> Please use the link below to access it: <br /> <a href="https://jsconsole.ml">https://jsconsole.ml</a>`
+        `Thanks for signing up with JS Console. We wish you a happing JS Programming Journey! <br/><br/> Please use the link below to access it: <br /> <a href="https://jsconsole.ml">https://jsconsole.ml</a>`
       ),
     };
     try {

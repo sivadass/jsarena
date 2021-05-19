@@ -1,16 +1,15 @@
 const router = require("express").Router();
-const Category = require("../model/Category");
-const { categoryValidation } = require("../validation");
+const Project = require("../model/Project");
+const { projectValidation } = require("../validation");
 const verify = require("./verifyToken");
 
-router.post("/", verify, async (req, res) => {
-  const { error } = categoryValidation(req.body);
+router.post("/", async (req, res) => {
+  const { error } = projectValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
-  const category = new Category({
+  const category = new Project({
     name: req.body.name,
-    icon: req.body.icon,
-    color: req.body.color,
-    owner: req.user._id,
+    code: req.body.code,
+    // owner: req.user._id,
   });
   try {
     const savedCategory = await category.save();
@@ -22,26 +21,26 @@ router.post("/", verify, async (req, res) => {
 
 router.get("/", async (req, res) => {
   let query = {};
-  const excludedFields = ["-__v", "-owner", "-createdAt", "-updatedAt"];
+  const excludedFields = ["-__v", "-owner"];
   try {
-    const allCategories = await Category.find(query).select(excludedFields);
+    const allCategories = await Project.find(query).select(excludedFields);
     res.send(allCategories);
   } catch (err) {
     res.status(400).send(err);
   }
 });
 
-router.get("/:id", verify, async (req, res) => {
+router.get("/:id", async (req, res) => {
   let query = {};
   if (req.user.role !== "admin") {
     query.owner = req.user._id;
   }
   try {
-    const categoryDetails = await Category.findById(
+    const categoryDetails = await Project.findById(
       req.params.id,
       (err, detail) => {
         var opts = [{ path: "category", match: { owner: req.user._id } }];
-        Category.populate(detail, opts, function (err, details) {
+        Project.populate(detail, opts, function (err, details) {
           console.log(details);
         });
       }
@@ -54,13 +53,13 @@ router.get("/:id", verify, async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    Category.findOneAndUpdate(
+    Project.findOneAndUpdate(
       {
         _id: req.params.id,
       },
       {
         name: req.body.name,
-        icon: req.body.icon,
+        code: req.body.code,
       },
       (err) => {
         if (err) {
@@ -76,7 +75,7 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const data = await Category.deleteOne({ _id: req.params.id });
+    const data = await Project.deleteOne({ _id: req.params.id });
     if (data.ok === 1) {
       return res.send("Successfully deleted!");
     }
