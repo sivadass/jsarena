@@ -1,30 +1,69 @@
-import { putData } from "./utils/fetch";
+import { putData, postData, getData } from "./utils/fetch";
+const saveButton = document.querySelector("button.save");
+const runButton = document.querySelector("button.run");
 
+saveButton.addEventListener("click", save);
+runButton.addEventListener("click", showPreview);
 var urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
 
 var contentWindow = document.getElementById("output").contentWindow;
 
 function main() {
-  const runButton = document.querySelector("button.run");
-  runButton.addEventListener("click", showPreview);
+  if (projectId) {
+    return getData(`${process.env.API_URL}/project/${projectId}`)
+      .then((data) => {
+        console.log("==> ", data);
+        var jsCodeField = document.getElementById("jsCode");
+        jsCodeField.value = data.code;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+  return;
+}
+
+function save() {
+  var jsCode = document.getElementById("jsCode").value;
+  if (!projectId) {
+    postData(`${process.env.API_URL}/project`, {
+      name: "testing-code",
+      code: `${jsCode}`,
+    })
+      .then((data) => {
+        const id = data._id;
+        urlParams.set("id", id);
+        window.location.search = urlParams.toString();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  } else {
+    putData(`${process.env.API_URL}/project/${projectId}`, {
+      name: "testing-code",
+      code: `${jsCode}`,
+    })
+      .then(() => {
+        contentWindow.eval(jsCode);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
 }
 
 function showPreview() {
   var jsCode = document.getElementById("jsCode").value;
-  return putData(
-    `https://jsconsole-api.herokuapp.com/api/v1/project/${projectId}`,
-    {
-      name: "testing-code",
-      code: jsCode,
-    }
-  )
-    .then((data) => {
-      console.log(data); // JSON data parsed by `data.json()` call
+  putData(`${process.env.API_URL}/project/${projectId}`, {
+    name: "testing-code",
+    code: `${jsCode}`,
+  })
+    .then(() => {
       contentWindow.eval(jsCode);
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 }
 

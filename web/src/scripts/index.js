@@ -6,7 +6,7 @@ function main() {
 }
 
 function createNewProject() {
-  return postData(`https://jsconsole-api.herokuapp.com/api/v1/project/`, {
+  return postData(`${process.env.API_URL}/project/`, {
     name: "testing-code",
     code: `console.log("hello world")`,
   }).then((data) => {

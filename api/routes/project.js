@@ -31,21 +31,9 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  let query = {};
-  if (req.user.role !== "admin") {
-    query.owner = req.user._id;
-  }
   try {
-    const categoryDetails = await Project.findById(
-      req.params.id,
-      (err, detail) => {
-        var opts = [{ path: "category", match: { owner: req.user._id } }];
-        Project.populate(detail, opts, function (err, details) {
-          console.log(details);
-        });
-      }
-    );
-    res.send(categoryDetails);
+    const projectDetails = await Project.findById(req.params.id);
+    res.send(projectDetails);
   } catch (err) {
     res.status(400).send(err);
   }
@@ -61,11 +49,11 @@ router.put("/:id", async (req, res) => {
         name: req.body.name,
         code: req.body.code,
       },
-      (err) => {
+      (err, data) => {
         if (err) {
           return res.send(err);
         }
-        return res.send("Successfully updated!");
+        return res.send({ data, message: "success" });
       }
     );
   } catch (err) {

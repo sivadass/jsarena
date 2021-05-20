@@ -10,7 +10,7 @@ const userRoute = require("./routes/user");
 const projectRoute = require("./routes/project");
 
 // Backend Port Number
-const PORT_NUMBER = process.env.PORT || 5001;
+const PORT_NUMBER = process.env.PORT || 5003;
 
 // config env variables
 dotenv.config();
