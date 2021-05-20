@@ -4,7 +4,7 @@
   "description": "Live code editor for JS",
     "scripts": {
     "start": "parcel serve ./src/pages/*.html",
-    "build": "parcel build ./src/pages/*.html"
+    "build": "NODE_ENV=production parcel build ./src/pages/*.html --no-source-maps"
   },
   "repository": {
     "type": "git",

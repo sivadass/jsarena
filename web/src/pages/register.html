@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>JS Console</title>
+  <title>Register - JS Console</title>
   <meta name="description" content="JS Live Code Editor">
   <meta name="author" content="Sivadass N">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,14 +20,25 @@
       <a href="/">
         <img src="../images/logo.png" alt="JS Console" />
       </a>
-      <a href="./login.html" class="login-link">Login / Register</button>
+      <a href="./login.html" class="login-link">Login</button>
     </div>
   </header>
   <main class="main-container">
     <div class="contanier welcome">
-      <img src="../images/welcome.svg" alt="Welcome" />
-      <h1>Welcome to JS Console!</h1>
-      <button class="create">Create New</button>
+      <h1>Register</h1>
+      <form>
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="Email Address" />
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="Password" />
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" placeholder="Confirm Password" />
+        </div>
+        <button type="submit" class="">Register</button>
+        <p class="auth-link">Existing user? <a href="./login.html">Login Now!</a>.</p>
+      </form>
     </div>
   </main>
   <script src="../scripts/index.js"></script>
