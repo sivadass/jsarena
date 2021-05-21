@@ -1,0 +1,33 @@
+.projects {
+  max-width: 960px;
+  margin: 0 auto;
+  h1 {
+    margin: 32px 0;
+  }
+}
+
+.hero-list {
+  margin: 32px auto;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(5, 1fr);
+  li {
+    width: 200px;
+    background: #f7f7f7;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    padding: 16px;
+    .name {
+      margin-bottom: 8px;
+    }
+    .description {
+      height: 80px;
+      width: 100%;
+      overflow-y: auto;
+      background: #232323;
+      color: #999;
+      border-radius: 8px;
+      padding: 8px;
+    }
+  }
+}

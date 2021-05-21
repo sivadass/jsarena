@@ -1,6 +1,8 @@
 import { putData, postData, getData } from "./utils/fetch";
 const saveButton = document.querySelector("button.save");
 const runButton = document.querySelector("button.run");
+const jsCodeField = document.getElementById("jsCode");
+const projectNameField = document.querySelector("input.project-name");
 
 saveButton.addEventListener("click", save);
 runButton.addEventListener("click", showPreview);
@@ -13,9 +15,9 @@ function main() {
   if (projectId) {
     return getData(`${process.env.API_URL}/project/${projectId}`)
       .then((data) => {
-        console.log("==> ", data);
-        var jsCodeField = document.getElementById("jsCode");
         jsCodeField.value = data.code;
+        projectNameField.value = data.name;
+        console.log("=====>");
       })
       .catch((err) => {
         console.error(err);
@@ -28,7 +30,7 @@ function save() {
   var jsCode = document.getElementById("jsCode").value;
   if (!projectId) {
     postData(`${process.env.API_URL}/project`, {
-      name: "testing-code",
+      name: projectNameField.value,
       code: `${jsCode}`,
     })
       .then((data) => {
@@ -41,10 +43,12 @@ function save() {
       });
   } else {
     putData(`${process.env.API_URL}/project/${projectId}`, {
-      name: "testing-code",
+      name: projectNameField.value,
       code: `${jsCode}`,
     })
-      .then(() => {
+      .then((data) => {
+        console.log("data");
+        console.log("==> saving data", data);
         contentWindow.eval(jsCode);
       })
       .catch((err) => {
@@ -55,16 +59,7 @@ function save() {
 
 function showPreview() {
   var jsCode = document.getElementById("jsCode").value;
-  putData(`${process.env.API_URL}/project/${projectId}`, {
-    name: "testing-code",
-    code: `${jsCode}`,
-  })
-    .then(() => {
-      contentWindow.eval(jsCode);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  contentWindow.eval(jsCode);
 }
 
 window.addEventListener("load", main, false);

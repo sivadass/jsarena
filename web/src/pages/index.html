@@ -1,46 +1,65 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>JS Console</title>
-  <meta name="description" content="JS Live Code Editor">
-  <meta name="author" content="Sivadass N">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="icon" href="../favicon.ico" type="image/x-icon" />
-  <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles/global.css">
-  <link rel="stylesheet" href="../styles/editor.css">
-</head>
+    <head>
+        <meta charset="utf-8" />
+        <title>JS Console</title>
+        <meta name="description" content="JS Live Code Editor" />
+        <meta name="author" content="Sivadass N" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../styles/global.scss" />
+        <link rel="stylesheet" href="../styles/editor.scss" />
+    </head>
 
-<body>
-  <header>
-    <div class="container">
-      <a href="/">
-        <img src="../images/logo.png" alt="JS Console" />
-      </a>
-      <div class="actions">
-      <button title="Save" class="save">
-        <img src="../images/save.svg" />
-      </button>
-      <button title="Run" class="run">
-        <img src="../images/run.svg" />
-      </button>
-    </div>
-    </div>
-  </header>
-  <main class="main-container">
-    <div class="code">
-      <textarea
-        id="jsCode"
-        placeholder="Please use your devtool's console for output." 
-      ></textarea>	
-    </div>
-    <div class="preview">
-      <iframe id="output"></iframe>
-    </div>
-  </main>
-  <script type="module" src="../scripts/editor.js"></script>
-</body>
+    <body>
+        <header class="header">
+            <div class="container">
+                <a class="brand" href="/">
+                    <img src="../images/logo.svg" alt="JS Console" />
+                </a>
+                <div class="project-link">
+                    <a href="../pages/projects.html">My Projects</a>
+                    <span>/</span>
+                    <input
+                        name="project-name"
+                        class="project-name"
+                        type="text"
+                        value="New Project"
+                    />
+                </div>
+                <div class="actions">
+                    <button title="Save" class="save">
+                        <img src="../images/save.svg" />
+                    </button>
+                    <button title="Run" class="run">
+                        <img src="../images/run.svg" />
+                    </button>
+                    <button title="Login/Register" class="login">
+                        <img src="../images/user.svg" />
+                    </button>
+                </div>
+            </div>
+        </header>
+        <main class="main-container editor">
+            <div class="code">
+                <textarea
+                    id="jsCode"
+                    placeholder="Loading..."
+                    spellcheck="false"
+                ></textarea>
+            </div>
+            <div class="preview">
+                <pre id="debugDiv"></pre>
+                <iframe id="output"></iframe>
+            </div>
+        </main>
+        <script src="../scripts/utils/console.js"></script>
+        <script type="module" src="../scripts/editor.js"></script>
+    </body>
 </html>

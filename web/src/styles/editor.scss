@@ -1,0 +1,56 @@
+.run {
+  border: none;
+  background: transparent;
+  padding: 8px 0;
+  color: #8bc34a;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.preview {
+  width: 40%;
+  background: #f7f7f7;
+  iframe {
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.code {
+  background: #444;
+  width: 60%;
+  textarea {
+    display: block;
+    height: 100%;
+    width: 100%;
+    border: none;
+    background: #444;
+    color: #fff;
+    font-size: 18px;
+    padding: 16px;
+    &:focus,
+    &:active {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.editor {
+  display: flex;
+  width: 100%;
+  @media (max-width: 480px) {
+    flex-direction: column;
+    .code,
+    .preview {
+      width: 100%;
+    }
+    .code {
+      height: 60%;
+    }
+    .preview {
+      height: 40%;
+    }
+  }
+}

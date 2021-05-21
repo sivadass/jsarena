@@ -2,7 +2,7 @@
   "name": "js-console",
   "version": "0.0.1",
   "description": "Live code editor for JS",
-    "scripts": {
+  "scripts": {
     "start": "parcel serve ./src/pages/*.html",
     "build": "NODE_ENV=production parcel build ./src/pages/*.html --no-source-maps"
   },
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/sivadass/js-console#readme",
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.0-beta.2",
     "parcel": "^2.0.0-beta.2"
   }
 }
