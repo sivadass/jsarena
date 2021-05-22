@@ -9,7 +9,8 @@ runButton.addEventListener("click", showPreview);
 var urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
 
-var contentWindow = document.getElementById("output").contentWindow;
+var iframe = document.getElementById("output-iframe");
+var iframeWin = iframe.contentWindow || iframe;
 
 function main() {
   if (projectId) {
@@ -17,7 +18,6 @@ function main() {
       .then((data) => {
         jsCodeField.value = data.code;
         projectNameField.value = data.name;
-        console.log("=====>");
       })
       .catch((err) => {
         console.error(err);
@@ -47,9 +47,7 @@ function save() {
       code: `${jsCode}`,
     })
       .then((data) => {
-        console.log("data");
-        console.log("==> saving data", data);
-        contentWindow.eval(jsCode);
+        iframeWin.eval(jsCode);
       })
       .catch((err) => {
         console.error(err);
@@ -59,7 +57,27 @@ function save() {
 
 function showPreview() {
   var jsCode = document.getElementById("jsCode").value;
-  contentWindow.eval(jsCode);
+  const loggerCode = `
+    let panel = parent.document.getElementById("console-logs");
+    var console = {
+        panel: panel,
+        log: function(m){
+            let pre = parent.document.createElement("pre");
+            pre.setAttribute("class","console-line-item");
+            pre.textContent = typeof m === 'object' ? JSON.stringify(
+              m,
+              null,
+              2
+            ) : m;
+            this.panel.prepend(pre);
+        }
+    };
+  `;
+  const codeToRun = `
+    ${loggerCode}
+    ${jsCode}
+  `;
+  iframeWin.eval(codeToRun);
 }
 
 window.addEventListener("load", main, false);
