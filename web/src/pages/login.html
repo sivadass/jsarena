@@ -15,30 +15,34 @@
 </head>
 
 <body>
-  <header>
+  <header class="header">
     <div class="container">
-      <a href="/">
-        <img src="../images/logo.svg" alt="JS Console" />
-      </a>
-      <a href="./register.html" class="login-link">Register</button>
+        <a class="brand" href="/">
+            <img src="../images/logo.svg" alt="JS Console" />
+        </a>
+        <div class="actions">
+            <button title="Login" class="login">
+                <img src="../images/user.svg" />
+            </button>
+        </div>
     </div>
   </header>
   <main class="main-container">
     <div class="contanier welcome">
       <h1>Login</h1>
       <img src="../images/welcome.svg" alt="Welcome" />
-      <form>
+      <form id="login-form">
         <div class="form-group">
           <input type="email" class="form-control" placeholder="Email Address" />
         </div>
         <div class="form-group">
           <input type="password" class="form-control" placeholder="Password" />
         </div>
-        <button type="submit" class="">Login</button>
+        <button type="submit" class="login-submit">Login</button>
         <p class="auth-link">New here ? <a href="./register.html">Register Now!</a>.</p>
       </form>
     </div>
   </main>
-  <script src="../scripts/index.js"></script>
+  <script src="../scripts/login.js"></script>
 </body>
 </html>
