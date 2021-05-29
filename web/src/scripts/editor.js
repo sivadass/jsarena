@@ -1,3 +1,6 @@
+import CodeMirror from "../scripts/codemirror/codemirror";
+import "../scripts/codemirror/addon/edit/closebrackets";
+import "../scripts/codemirror/mode/javascript";
 import { putData, postData, getData } from "./utils/fetch";
 const saveButton = document.querySelector("button.save");
 const runButton = document.querySelector("button.run");
@@ -12,11 +15,24 @@ const projectId = urlParams.get("id") || "";
 var iframe = document.getElementById("output-iframe");
 var iframeWin = iframe.contentWindow || iframe;
 
+var editor = CodeMirror.fromTextArea(jsCodeField, {
+  lineWrapping: true,
+  theme: "monokai",
+  styleActiveLine: true,
+  lineNumbers: true,
+  matchBrackets: true,
+  indentUnit: 4,
+  indentWithTabs: true,
+  autoCloseTags: true,
+  autoCloseBrackets: true,
+});
+
 function main() {
   if (projectId) {
     return getData(`${process.env.API_URL}/project/${projectId}`)
       .then((data) => {
-        jsCodeField.value = data.code;
+        // jsCodeField.value = data.code;
+        editor.setValue(data.code);
         projectNameField.value = data.name;
       })
       .catch((err) => {
@@ -27,7 +43,7 @@ function main() {
 }
 
 function save() {
-  var jsCode = document.getElementById("jsCode").value;
+  var jsCode = editor.getValue();
   if (!projectId) {
     postData(`${process.env.API_URL}/project`, {
       name: projectNameField.value,
@@ -56,7 +72,8 @@ function save() {
 }
 
 function showPreview() {
-  var jsCode = document.getElementById("jsCode").value;
+  // var jsCode = document.getElementById("jsCode").value;
+  var jsCode = editor.getValue();
   const loggerCode = `
     let panel = parent.document.getElementById("console-logs");
     var console = {
