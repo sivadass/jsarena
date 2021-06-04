@@ -10,8 +10,10 @@ export async function postData(url = "", data = {}) {
   if (response.ok) {
     return response.json();
   } else {
-    console.error("in fetch handler ==>", response.text());
-    throw new Error("Something went wrong");
+    return response.text().then((text) => {
+      console.log("==>", text);
+      throw new Error(text);
+    });
   }
 }
 
@@ -27,8 +29,9 @@ export async function putData(url = "", data = {}) {
   if (response.ok) {
     return response.json();
   } else {
-    console.error("in fetch handler ==>", response.body);
-    throw new Error("Something went wrong");
+    return response.text().then((text) => {
+      throw new Error(text);
+    });
   }
 }
 
@@ -43,7 +46,8 @@ export async function getData(url = "") {
   if (response.ok) {
     return response.json();
   } else {
-    console.error("in fetch handler ==>", response);
-    throw new Error("Something went wrong");
+    return response.text().then((text) => {
+      throw new Error(text);
+    });
   }
 }

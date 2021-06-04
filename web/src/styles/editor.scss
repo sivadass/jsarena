@@ -47,6 +47,10 @@
     .console-line-item {
       padding: 8px;
       border-bottom: 1px solid #ccc;
+      &.error {
+        color: #ce2417;
+        background: #e8a1a145;
+      }
     }
   }
   @media (max-width: 480px) {

@@ -1,51 +1,57 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Register - JS Console</title>
-  <meta name="description" content="JS Live Code Editor">
-  <meta name="author" content="Sivadass N">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="icon" href="../favicon.ico" type="image/x-icon" />
-  <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../styles/global.scss">
-  <link rel="stylesheet" href="../styles/index.scss">
-</head>
+  <head>
+    <meta charset="utf-8" />
+    <title>Register - JS Console</title>
+    <meta name="description" content="JS Live Code Editor" />
+    <meta name="author" content="Sivadass N" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/global.scss" />
+    <link rel="stylesheet" href="../styles/index.scss" />
+  </head>
 
-<body>
-  <header class="header">
-    <div class="container">
+  <body>
+    <main class="main-container">
+      <div class="contanier welcome">
         <a class="brand" href="/">
-            <img src="../images/logo.svg" alt="JS Console" />
+          <img src="../images/logo-black.svg" alt="JS Console" />
         </a>
-        <div class="actions">
-            <button title="Login" class="login">
-                <img src="../images/user.svg" />
-            </button>
-        </div>
-    </div>
-  </header>
-  <main class="main-container">
-    <div class="contanier welcome">
-      <h1>Register</h1>
-      <img src="../images/welcome.svg" alt="Welcome" />
-      <form>
-        <div class="form-group">
-          <input type="email" class="form-control" placeholder="Email Address" />
-        </div>
-        <div class="form-group">
-          <input type="password" class="form-control" placeholder="Password" />
-        </div>
-        <div class="form-group">
-          <input type="password" class="form-control" placeholder="Confirm Password" />
-        </div>
-        <button type="submit" class="">Register</button>
-        <p class="auth-link">Existing user? <a href="./login.html">Login Now!</a>.</p>
-      </form>
-    </div>
-  </main>
-  <script src="../scripts/index.js"></script>
-</body>
+        <form>
+          <div class="form-group">
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Email Address"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Password"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Confirm Password"
+            />
+          </div>
+          <button type="submit" class="">Register</button>
+          <p class="auth-link">
+            Existing user? <a href="./login.html">Login Now!</a>.
+          </p>
+        </form>
+      </div>
+    </main>
+    <script src="../scripts/index.js"></script>
+  </body>
 </html>

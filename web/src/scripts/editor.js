@@ -4,11 +4,13 @@ import "../scripts/codemirror/mode/javascript";
 import { putData, postData, getData } from "./utils/fetch";
 const saveButton = document.querySelector("button.save");
 const runButton = document.querySelector("button.run");
+const clearAllButton = document.querySelector("button.clear-all");
 const jsCodeField = document.getElementById("jsCode");
 const projectNameField = document.querySelector("input.project-name");
 
 saveButton.addEventListener("click", save);
 runButton.addEventListener("click", showPreview);
+clearAllButton.addEventListener("click", clearAll);
 var urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
 
@@ -25,13 +27,15 @@ var editor = CodeMirror.fromTextArea(jsCodeField, {
   indentWithTabs: true,
   autoCloseTags: true,
   autoCloseBrackets: true,
+  // extraKeys: {
+  //   "Ctrl-/": editor.execCommand("toggleComment"),
+  // },
 });
 
 function main() {
   if (projectId) {
     return getData(`${process.env.API_URL}/project/${projectId}`)
       .then((data) => {
-        // jsCodeField.value = data.code;
         editor.setValue(data.code);
         projectNameField.value = data.name;
       })
@@ -82,19 +86,35 @@ function showPreview() {
             let pre = parent.document.createElement("pre");
             pre.setAttribute("class","console-line-item");
             pre.textContent = typeof m === 'object' ? JSON.stringify(
-              m,
-              null,
-              2
-            ) : m;
-            this.panel.prepend(pre);
-        }
+              m) : m;
+            this.panel.append(pre);
+        },
+        error: function(m){
+          let pre = parent.document.createElement("pre");
+          pre.setAttribute("class","console-line-item error");
+          pre.textContent = typeof m === 'object' ? JSON.stringify(
+            m,
+            null,
+            2
+          ) : m;
+          this.panel.prepend(pre);
+      }
     };
   `;
   const codeToRun = `
     ${loggerCode}
     ${jsCode}
   `;
-  iframeWin.eval(codeToRun);
+  try {
+    iframeWin.eval(codeToRun);
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function clearAll() {
+  const consoleLogsContainer = document.getElementById("console-logs");
+  consoleLogsContainer.replaceChildren();
 }
 
 window.addEventListener("load", main, false);
