@@ -20,7 +20,6 @@ let panel = parent.document.getElementById("console-logs");
 iframeWin.console = {
   panel: panel,
   log: function (...m) {
-    console.log(m);
     let pre = parent.document.createElement("pre");
     pre.setAttribute("class", "console-line-item");
     m.forEach((mItem) => {
