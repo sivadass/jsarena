@@ -38,6 +38,18 @@
   }
 }
 
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .editor {
   display: flex;
   width: 100%;
@@ -48,6 +60,8 @@
       padding: 4px 8px;
       font-size: 14px;
       border-bottom: 1px solid #ddd;
+      animation-name: fadeInDown;
+      animation-duration: 450ms;
       span {
         margin: 0 4px;
       }
