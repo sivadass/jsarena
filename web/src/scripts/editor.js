@@ -16,6 +16,28 @@ const projectId = urlParams.get("id") || "";
 
 var iframe = document.getElementById("output-iframe");
 var iframeWin = iframe.contentWindow || iframe;
+let panel = parent.document.getElementById("console-logs");
+iframeWin.console = {
+  panel: panel,
+  log: function (...m) {
+    console.log(m);
+    let pre = parent.document.createElement("pre");
+    pre.setAttribute("class", "console-line-item");
+    m.forEach((mItem) => {
+      var newSpan = document.createElement("span");
+      newSpan.textContent +=
+        typeof mItem === "object" ? JSON.stringify(mItem) : mItem;
+      pre.appendChild(newSpan);
+    });
+    this.panel.append(pre);
+  },
+  error: function (m) {
+    let pre = parent.document.createElement("pre");
+    pre.setAttribute("class", "console-line-item error");
+    pre.textContent = typeof m === "object" ? JSON.stringify(m, null, 2) : m;
+    this.panel.append(pre);
+  },
+};
 
 var editor = CodeMirror.fromTextArea(jsCodeField, {
   lineWrapping: true,
@@ -76,39 +98,12 @@ function save() {
 }
 
 function showPreview() {
-  // var jsCode = document.getElementById("jsCode").value;
   var jsCode = editor.getValue();
-  const loggerCode = `
-    let panel = parent.document.getElementById("console-logs");
-    var console = {
-        panel: panel,
-        log: function(m){
-            let pre = parent.document.createElement("pre");
-            pre.setAttribute("class","console-line-item");
-            pre.textContent = typeof m === 'object' ? JSON.stringify(
-              m) : m;
-            this.panel.append(pre);
-        },
-        error: function(m){
-          let pre = parent.document.createElement("pre");
-          pre.setAttribute("class","console-line-item error");
-          pre.textContent = typeof m === 'object' ? JSON.stringify(
-            m,
-            null,
-            2
-          ) : m;
-          this.panel.prepend(pre);
-      }
-    };
-  `;
-  const codeToRun = `
-    ${loggerCode}
-    ${jsCode}
-  `;
   try {
-    iframeWin.eval(codeToRun);
+    iframeWin.eval(jsCode);
   } catch (e) {
-    console.error(e);
+    console.log(e); // Check EvalError object
+    iframeWin.console.error(`${e.name}: ${e.message}`);
   }
 }
 

@@ -45,8 +45,12 @@
     height: 100%;
     overflow-y: auto;
     .console-line-item {
-      padding: 8px;
-      border-bottom: 1px solid #ccc;
+      padding: 4px 8px;
+      font-size: 14px;
+      border-bottom: 1px solid #ddd;
+      span {
+        margin: 0 4px;
+      }
       &.error {
         color: #ce2417;
         background: #e8a1a145;
