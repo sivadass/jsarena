@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const axios = require("axios");
 const User = require("../model/User");
 const { registerValidation, loginValidation } = require("../validation");
 const sendEmail = require("../utils/sendMail");
@@ -218,12 +219,32 @@ router.put("/profile", verify, async (req, res) => {
   }
 });
 
-router.get("/getAllResidents", verify, async (req, res) => {
-  let query = {};
-  const excludedFields = ["-password", "-role", "-activated", "-__v"];
+router.post("/github-authorize", async (req, res) => {
+  const { sessionCode } = req.body;
+  const headers = {
+    Accept: "application/json",
+  };
   try {
-    const allResidents = await User.find(query).select(excludedFields);
-    res.send(allResidents);
+    const tokenResponse = await axios.post(
+      "https://github.com/login/oauth/access_token",
+      {
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        redirect_uri: process.env.GITHUB_REDIRECT_URI,
+        code: sessionCode,
+      },
+      {
+        headers,
+      }
+    );
+    const data = tokenResponse.data;
+    if (data.error === "bad_verification_code") {
+      res.status(400).send(data);
+    } else if (data.access_token) {
+      res.send(data);
+    } else {
+      res.status(400).send({ error: "Unknown error occurred in Github auth" });
+    }
   } catch (err) {
     res.status(400).send(err);
   }

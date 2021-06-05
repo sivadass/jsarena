@@ -65,6 +65,7 @@ pre {
   }
   .actions {
     // display: flex;
+    a,
     button {
       padding: 0;
       width: 36px;
@@ -74,6 +75,17 @@ pre {
         width: 36px;
         height: 36px;
         opacity: 0.66;
+        &.avatar {
+          border-radius: 18px;
+        }
+      }
+      &.logged-in {
+        color: #fff;
+        img {
+          border-radius: 18px;
+          opacity: 1;
+        }
+        // width: auto;
       }
     }
   }

@@ -35,14 +35,16 @@ export async function putData(url = "", data = {}) {
   }
 }
 
-export async function getData(url = "") {
-  const response = await fetch(url, {
+export async function getData(url = "", options = {}) {
+  const headers = {
     method: "GET",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
+      ...options,
     },
-  });
+  };
+  const response = await fetch(url, headers);
   if (response.ok) {
     return response.json();
   } else {

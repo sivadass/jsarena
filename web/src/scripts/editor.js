@@ -5,6 +5,7 @@ import { putData, postData, getData } from "./utils/fetch";
 import { hasAnything } from "./utils/common";
 const saveButton = document.querySelector("button.save");
 const runButton = document.querySelector("button.run");
+const loginButton = document.querySelector("button.login");
 const runButtonEmpty = document.querySelector("button.run-empty");
 const clearAllButton = document.querySelector("button.clear-all");
 const jsCodeField = document.getElementById("jsCode");
@@ -13,7 +14,9 @@ const projectNameField = document.querySelector("input.project-name");
 saveButton.addEventListener("click", save);
 runButton.addEventListener("click", showPreview);
 runButtonEmpty.addEventListener("click", showPreview);
+loginButton.addEventListener("click", goToLogin);
 clearAllButton.addEventListener("click", clearAll);
+const accessToken = localStorage.getItem("accessToken");
 var urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
 
@@ -64,8 +67,9 @@ var editor = CodeMirror.fromTextArea(jsCodeField, {
 });
 
 function main() {
+  console.log(accessToken);
   if (projectId) {
-    return getData(`${process.env.API_URL}/project/${projectId}`)
+    getData(`${process.env.API_URL}/project/${projectId}`)
       .then((data) => {
         editor.setValue(data.code);
         projectNameField.value = data.name;
@@ -74,7 +78,27 @@ function main() {
         console.error(err);
       });
   }
-  return;
+  if (accessToken) {
+    const headers = {
+      Authorization: `token ${accessToken}`,
+    };
+    getData(`https://api.github.com/user`, headers)
+      .then((data) => {
+        console.log("user data", data);
+        localStorage.setItem("user", JSON.stringify(data));
+        loginButton.setAttribute("class", "logged-in");
+        loginButton.firstElementChild.setAttribute("src", data.avatar_url);
+        // loginButton.firstElementChild.setAttribute("class", "avatar");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+}
+
+function goToLogin() {
+  const loginURL = `https://github.com/login/oauth/authorize?scope=login&client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_REDIRECT_URI}`;
+  window.location.href = loginURL;
 }
 
 function save() {
