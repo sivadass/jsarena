@@ -2,28 +2,38 @@ import CodeMirror from "../scripts/codemirror/codemirror";
 import "../scripts/codemirror/addon/edit/closebrackets";
 import "../scripts/codemirror/mode/javascript";
 import { putData, postData, getData } from "./utils/fetch";
+import { hasAnything } from "./utils/common";
 const saveButton = document.querySelector("button.save");
 const runButton = document.querySelector("button.run");
+const runButtonEmpty = document.querySelector("button.run-empty");
 const clearAllButton = document.querySelector("button.clear-all");
 const jsCodeField = document.getElementById("jsCode");
 const projectNameField = document.querySelector("input.project-name");
 
 saveButton.addEventListener("click", save);
 runButton.addEventListener("click", showPreview);
+runButtonEmpty.addEventListener("click", showPreview);
 clearAllButton.addEventListener("click", clearAll);
 var urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
 
 var iframe = document.getElementById("output-iframe");
 var iframeWin = iframe.contentWindow || iframe;
+let consoleLogsContainer = document.getElementById("console-logs");
+let consoleLogsEmpty = document.getElementById("console-logs-empty");
 let panel = parent.document.getElementById("console-logs");
+let animationDelay = -1;
 iframeWin.console = {
   panel: panel,
   log: function (...m) {
     let pre = parent.document.createElement("pre");
+    animationDelay += 1;
     pre.setAttribute("class", "console-line-item");
+    pre.style.setProperty("--animation-order", animationDelay);
     m.forEach((mItem) => {
       var newSpan = document.createElement("span");
+      newSpan.setAttribute("class", typeof mItem);
+      console.log(typeof mItem);
       newSpan.textContent +=
         typeof mItem === "object" ? JSON.stringify(mItem) : mItem;
       pre.appendChild(newSpan);
@@ -96,19 +106,36 @@ function save() {
   }
 }
 
+function scrollToBottom() {
+  const scrollHeight = consoleLogsContainer.scrollHeight;
+  consoleLogsContainer.scrollTo({
+    top: scrollHeight,
+    left: 0,
+    behavior: "smooth",
+  });
+}
+
 function showPreview() {
   var jsCode = editor.getValue();
+  animationDelay = -1;
   try {
     iframeWin.eval(jsCode);
+    scrollToBottom();
   } catch (e) {
     console.log(e); // Check EvalError object
     iframeWin.console.error(`${e.name}: ${e.message}`);
   }
+  if (!hasAnything("#console-logs")) {
+    consoleLogsEmpty.classList.add("active");
+  } else {
+    consoleLogsEmpty.classList.remove("active");
+  }
 }
 
 function clearAll() {
-  const consoleLogsContainer = document.getElementById("console-logs");
   consoleLogsContainer.replaceChildren();
+  animationDelay = -1;
+  consoleLogsEmpty.classList.add("active");
 }
 
 window.addEventListener("load", main, false);

@@ -29,7 +29,8 @@ console.log = function () {
 };
 
 // Const syntaxHightlight Script
-const syntaxHighlight = (json) => {
+export const syntaxHighlight = (json) => {
+  console.log({ json });
   json = json
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")

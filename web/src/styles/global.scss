@@ -8,6 +8,7 @@
 body {
   font-size: 16px;
   font-family: "PT Mono", monospace;
+  counter-reset: consoleLogCounter;
 }
 
 a {

@@ -41,7 +41,7 @@
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -10px, 0);
   }
 
   to {
@@ -56,14 +56,70 @@
   .preview {
     height: 100%;
     overflow-y: auto;
+    #console-logs {
+      overflow: auto;
+      max-height: 100%;
+    }
+    #console-logs-empty {
+      overflow: auto;
+      max-height: 100%;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 32px;
+      display: flex;
+      visibility: hidden;
+      height: 0;
+      opacity: 0;
+      transition: opacity 300ms ease-in;
+      p {
+        color: #999;
+        margin-bottom: 16px;
+      }
+      button {
+        background: #f7e04b;
+        border: none;
+      }
+      &.active {
+        visibility: visible;
+        height: calc(100vh - 52px);
+        opacity: 1;
+      }
+    }
     .console-line-item {
       padding: 4px 8px;
       font-size: 14px;
       border-bottom: 1px solid #ddd;
       animation-name: fadeInDown;
-      animation-duration: 450ms;
+      animation-duration: 150ms;
+      animation-fill-mode: both;
+      animation-timing-function: ease-in-out;
+      animation-delay: calc(var(--animation-order) * 90ms);
+      &:before {
+        display: inline-block;
+        counter-increment: consoleLogCounter;
+        content: counter(consoleLogCounter);
+        background: #ecead7;
+        color: #666;
+        width: 20px;
+        text-align: center;
+        height: 20px;
+        line-height: 20px;
+        border-radius: 4px;
+        margin-right: 12px;
+        font-size: 10px;
+      }
       span {
         margin: 0 4px;
+        &.object {
+          color: #222;
+        }
+        &.string {
+          color: red;
+        }
+        &.number {
+          color: blue;
+        }
       }
       &.error {
         color: #ce2417;
