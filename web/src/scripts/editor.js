@@ -2,7 +2,7 @@ import CodeMirror from "../scripts/codemirror/codemirror";
 import "../scripts/codemirror/addon/edit/closebrackets";
 import "../scripts/codemirror/mode/javascript";
 import { putData, postData, getData } from "./utils/fetch";
-import { hasAnything } from "./utils/common";
+import { hasAnything, debounce } from "./utils/common";
 const saveButton = document.querySelector("button.save");
 const runButton = document.querySelector("button.run");
 const loginButton = document.querySelector("button.login");
@@ -10,6 +10,7 @@ const runButtonEmpty = document.querySelector("button.run-empty");
 const clearAllButton = document.querySelector("button.clear-all");
 const jsCodeField = document.getElementById("jsCode");
 const projectNameField = document.querySelector("input.project-name");
+const authLabel = loginButton.getElementsByTagName("span")[0];
 
 saveButton.addEventListener("click", save);
 runButton.addEventListener("click", showPreview);
@@ -36,7 +37,6 @@ iframeWin.console = {
     m.forEach((mItem) => {
       var newSpan = document.createElement("span");
       newSpan.setAttribute("class", typeof mItem);
-      console.log(typeof mItem);
       newSpan.textContent +=
         typeof mItem === "object" ? JSON.stringify(mItem) : mItem;
       pre.appendChild(newSpan);
@@ -66,8 +66,21 @@ var editor = CodeMirror.fromTextArea(jsCodeField, {
   // },
 });
 
+// editor.on(
+//   "change",
+//   debounce(function (cMirror) {
+//     const value = cMirror.getValue();
+//     // console.log("value", value);
+//     save();
+//   }, 1000)
+// );
+
+editor.on(
+  "change",
+  debounce(() => save(), 1000)
+);
+
 function main() {
-  console.log(accessToken);
   if (projectId) {
     getData(`${process.env.API_URL}/project/${projectId}`)
       .then((data) => {
@@ -84,11 +97,10 @@ function main() {
     };
     getData(`https://api.github.com/user`, headers)
       .then((data) => {
-        console.log("user data", data);
         localStorage.setItem("user", JSON.stringify(data));
         loginButton.setAttribute("class", "logged-in");
         loginButton.firstElementChild.setAttribute("src", data.avatar_url);
-        // loginButton.firstElementChild.setAttribute("class", "avatar");
+        authLabel.textContent = data.name;
       })
       .catch((err) => {
         console.error(err);

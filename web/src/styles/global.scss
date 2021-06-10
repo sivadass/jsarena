@@ -9,6 +9,7 @@ body {
   font-size: 16px;
   font-family: "PT Mono", monospace;
   counter-reset: consoleLogCounter;
+  background: #193549;
 }
 
 a {
@@ -75,8 +76,20 @@ pre {
         width: 36px;
         height: 36px;
         opacity: 0.66;
+        vertical-align: middle;
         &.avatar {
           border-radius: 18px;
+        }
+      }
+      &.login {
+        width: auto;
+        color: #222;
+        background: #f7e04b;
+        padding: 0 8px;
+        img {
+          opacity: 1;
+          height: 24px;
+          width: 24px;
         }
       }
       &.logged-in {
@@ -85,7 +98,7 @@ pre {
           border-radius: 18px;
           opacity: 1;
         }
-        // width: auto;
+        width: auto;
       }
     }
   }

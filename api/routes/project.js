@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const Project = require("../model/Project");
-const { projectValidation } = require("../validation");
-const verify = require("./verifyToken");
+const { projectValidation } = require("../utils/validation");
+const verify = require("../middlewares/verifyToken");
 
 router.post("/", async (req, res) => {
   const { error } = projectValidation(req.body);
