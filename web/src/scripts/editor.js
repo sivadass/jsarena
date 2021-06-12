@@ -66,15 +66,6 @@ var editor = CodeMirror.fromTextArea(jsCodeField, {
   // },
 });
 
-// editor.on(
-//   "change",
-//   debounce(function (cMirror) {
-//     const value = cMirror.getValue();
-//     // console.log("value", value);
-//     save();
-//   }, 1000)
-// );
-
 editor.on(
   "change",
   debounce(() => save(), 1000)
