@@ -33,8 +33,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/static", express.static(path.join(__dirname, "public")));
 
 // Route Middlewares
-app.use("/api/v1/user", userRoute);
-app.use("/api/v1/project", projectRoute);
+app.use("/v1/user", userRoute);
+app.use("/v1/project", projectRoute);
 
 app.get("/", function (_, res) {
   res.sendFile(path.join(__dirname + "/public/index.html"));
