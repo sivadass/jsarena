@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Project = require("../model/Project");
-const { projectValidation } = require("../validation");
+const { projectValidation } = require("../utils/validation");
 const verify = require("../middlewares/verifyToken");
 
 router.post("/", async (req, res) => {

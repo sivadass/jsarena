@@ -124,8 +124,21 @@ function goToLogin() {
   window.location.href = loginURL;
 }
 
+function savingAnimation(isStart = true) {
+  var elements = document.getElementsByTagName("animate");
+  saveButton.disabled = isStart;
+  for (var i = 0; i < elements.length; i++) {
+    if (isStart) {
+      elements[i].beginElement();
+    } else {
+      elements[i].endElement();
+    }
+  }
+}
+
 function save() {
   var jsCode = editor.getValue();
+  savingAnimation();
   if (!projectId) {
     postData(`${process.env.API_URL}/project`, {
       name: projectNameField.value,
@@ -138,6 +151,9 @@ function save() {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        savingAnimation(false);
       });
   } else {
     putData(`${process.env.API_URL}/project/${projectId}`, {
@@ -149,6 +165,9 @@ function save() {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .finally(() => {
+        savingAnimation(false);
       });
   }
 }
