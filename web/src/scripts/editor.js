@@ -3,7 +3,6 @@ import "../scripts/codemirror/addon/edit/closebrackets";
 import "../scripts/codemirror/mode/javascript";
 import { putData, postData, getData } from "./utils/fetch";
 import { hasAnything, debounce, getOS } from "./utils/common";
-import caretIcon from "../images/loader.gif";
 const saveButton = document.querySelector("button.save");
 const runButton = document.querySelector("button.run");
 const loginButton = document.querySelector("button.login");
