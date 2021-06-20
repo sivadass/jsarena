@@ -1,12 +1,3 @@
-.run {
-  border: none;
-  background: #193549;
-  padding: 8px 0;
-  color: #8bc34a;
-  font-size: 24px;
-  cursor: pointer;
-}
-
 .preview {
   width: 40%;
   background: #f7f7f7;
@@ -87,7 +78,7 @@
       }
     }
     .console-line-item {
-      padding: 4px 8px;
+      padding: 4px 8px 4px 44px;
       font-size: 14px;
       border-bottom: 1px solid #ddd;
       animation-name: fadeInDown;
@@ -95,6 +86,8 @@
       animation-fill-mode: both;
       animation-timing-function: ease-in-out;
       animation-delay: calc(var(--animation-order) * 90ms);
+      white-space: pre-wrap;
+      line-height: 18px;
       &:before {
         display: inline-block;
         counter-increment: consoleLogCounter;
@@ -108,6 +101,8 @@
         border-radius: 4px;
         margin-right: 12px;
         font-size: 10px;
+        position: absolute;
+        left: 6px;
       }
       span {
         margin: 0 4px;
@@ -138,6 +133,52 @@
     }
     .preview {
       height: 40%;
+    }
+  }
+}
+
+.console-line-item-content {
+  // white-space: nowrap;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+}
+
+.console-line-item-switch {
+  display: none;
+  height: 0;
+  width: 0;
+  & + label {
+    &:before {
+      position: absolute;
+      content: "";
+      width: 0;
+      height: 0;
+      top: 10px;
+      left: 32px;
+      cursor: pointer;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      border-left: 4px solid #999;
+    }
+    & + .console-line-item-content {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  &:checked {
+    & + label {
+      &:before {
+        top: 13px;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid #333;
+      }
+      & + .console-line-item-content {
+        white-space: initial;
+        overflow: initial;
+        text-overflow: initial;
+      }
     }
   }
 }

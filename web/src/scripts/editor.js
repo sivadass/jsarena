@@ -2,7 +2,8 @@ import CodeMirror from "../scripts/codemirror/codemirror";
 import "../scripts/codemirror/addon/edit/closebrackets";
 import "../scripts/codemirror/mode/javascript";
 import { putData, postData, getData } from "./utils/fetch";
-import { hasAnything, debounce } from "./utils/common";
+import { hasAnything, debounce, getOS } from "./utils/common";
+import caretIcon from "../images/loader.gif";
 const saveButton = document.querySelector("button.save");
 const runButton = document.querySelector("button.run");
 const loginButton = document.querySelector("button.login");
@@ -18,11 +19,11 @@ runButtonEmpty.addEventListener("click", showPreview);
 loginButton.addEventListener("click", goToLogin);
 clearAllButton.addEventListener("click", clearAll);
 const accessToken = localStorage.getItem("accessToken");
-var urlParams = new URLSearchParams(window.location.search);
+const urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
 
-var iframe = document.getElementById("output-iframe");
-var iframeWin = iframe.contentWindow || iframe;
+let iframe = document.getElementById("output-iframe");
+let iframeWin = iframe.contentWindow || iframe;
 let consoleLogsContainer = document.getElementById("console-logs");
 let consoleLogsEmpty = document.getElementById("console-logs-empty");
 let panel = parent.document.getElementById("console-logs");
@@ -30,17 +31,30 @@ let animationDelay = -1;
 iframeWin.console = {
   panel: panel,
   log: function (...m) {
+    let tempId = Math.floor(Math.random() * 10000);
     let pre = parent.document.createElement("pre");
+    let toggleSwitch = parent.document.createElement("input");
+    let toggleSwitchLabel = parent.document.createElement("label");
+    let logsWrapper = parent.document.createElement("div");
     animationDelay += 1;
     pre.setAttribute("class", "console-line-item");
     pre.style.setProperty("--animation-order", animationDelay);
+    logsWrapper.setAttribute("class", "console-line-item-content");
+    pre.appendChild(toggleSwitch);
+    pre.appendChild(toggleSwitchLabel);
+    pre.appendChild(logsWrapper);
+    toggleSwitch.setAttribute("type", "checkbox");
+    toggleSwitch.setAttribute("id", tempId);
+    toggleSwitch.setAttribute("class", "console-line-item-switch");
+    toggleSwitchLabel.setAttribute("for", tempId);
     m.forEach((mItem) => {
       var newSpan = document.createElement("span");
       newSpan.setAttribute("class", typeof mItem);
       newSpan.textContent +=
-        typeof mItem === "object" ? JSON.stringify(mItem) : mItem;
-      pre.appendChild(newSpan);
+        typeof mItem === "object" ? JSON.stringify(mItem, null, 1) : mItem;
+      logsWrapper.appendChild(newSpan);
     });
+    pre.appendChild(logsWrapper);
     this.panel.append(pre);
   },
   error: function (m) {
@@ -72,6 +86,13 @@ editor.on(
 );
 
 function main() {
+  const OS = getOS();
+  saveButton.getElementsByTagName("span")[0].innerText =
+    OS === "MacOS" ? "CMD+S" : "CTRL+S";
+  runButton.getElementsByTagName("span")[0].innerText =
+    OS === "MacOS" ? "CMD+R" : "CTRL+R";
+  clearAllButton.getElementsByTagName("span")[0].innerText =
+    OS === "MacOS" ? "CMD+L" : "CTRL+L";
   if (projectId) {
     getData(`${process.env.API_URL}/project/${projectId}`)
       .then((data) => {
@@ -125,7 +146,7 @@ function save() {
       code: `${jsCode}`,
     })
       .then((data) => {
-        iframeWin.eval(jsCode);
+        // iframeWin.eval(jsCode);
       })
       .catch((err) => {
         console.error(err);
@@ -151,6 +172,7 @@ function showPreview() {
   } catch (e) {
     console.log(e); // Check EvalError object
     iframeWin.console.error(`${e.name}: ${e.message}`);
+    scrollToBottom();
   }
   if (!hasAnything("#console-logs")) {
     consoleLogsEmpty.classList.add("active");
@@ -165,4 +187,24 @@ function clearAll() {
   consoleLogsEmpty.classList.add("active");
 }
 
+function hotKeys(e) {
+  let windowEvent = window ? window.event : e;
+  if (windowEvent.keyCode === 83 && windowEvent.metaKey) {
+    e.preventDefault();
+    save();
+  }
+  if (
+    (windowEvent.keyCode === 82 && windowEvent.metaKey) ||
+    (windowEvent.keyCode === 82 && windowEvent.ctrlKey)
+  ) {
+    e.preventDefault();
+    showPreview();
+  }
+  if (windowEvent.keyCode === 76 && windowEvent.metaKey) {
+    e.preventDefault();
+    clearAll();
+  }
+}
+
 window.addEventListener("load", main, false);
+window.addEventListener("keydown", hotKeys, false);

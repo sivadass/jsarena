@@ -68,13 +68,14 @@ pre {
     // display: flex;
     a,
     button {
-      padding: 0;
-      width: 36px;
+      padding: 0 16px;
+      color: #fff;
       height: 36px;
       vertical-align: middle;
+      background: #666;
       img {
-        width: 36px;
-        height: 36px;
+        width: 24px;
+        height: 24px;
         opacity: 0.66;
         vertical-align: middle;
         &.avatar {

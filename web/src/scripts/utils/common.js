@@ -4,27 +4,33 @@ export function hasAnything(selector) {
 
 export const debounce = (func, wait) => {
   let timeout;
-
-  // This is the function that is returned and will be executed many times
-  // We spread (...args) to capture any number of parameters we want to pass
   return function executedFunction(...args) {
-    // The callback function to be executed after
-    // the debounce time has elapsed
     const later = () => {
-      // null timeout to indicate the debounce ended
       timeout = null;
-
-      // Execute the callback
       func(...args);
     };
-    // This will reset the waiting every function execution.
-    // This is the step that prevents the function from
-    // being executed because it will never reach the
-    // inside of the previous setTimeout
     clearTimeout(timeout);
-
-    // Restart the debounce waiting period.
-    // setTimeout returns a truthy value (it differs in web vs Node)
     timeout = setTimeout(later, wait);
   };
+};
+
+export const getOS = () => {
+  const userAgent = window.navigator.userAgent;
+  const platform = window.navigator.platform;
+  const macosPlatforms = ["Macintosh", "MacIntel", "MacPPC", "Mac68K"];
+  const windowsPlatforms = ["Win32", "Win64", "Windows", "WinCE"];
+  const iosPlatforms = ["iPhone", "iPad", "iPod"];
+  let os = null;
+  if (macosPlatforms.indexOf(platform) !== -1) {
+    os = "MacOS";
+  } else if (iosPlatforms.indexOf(platform) !== -1) {
+    os = "iOS";
+  } else if (windowsPlatforms.indexOf(platform) !== -1) {
+    os = "Windows";
+  } else if (/Android/.test(userAgent)) {
+    os = "Android";
+  } else if (!os && /Linux/.test(platform)) {
+    os = "Linux";
+  }
+  return os;
 };
