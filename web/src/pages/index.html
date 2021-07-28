@@ -9,10 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link rel="icon" href="../favicon.ico" type="image/x-icon" />
-    <link
+    <!-- <link
       href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap"
       rel="stylesheet"
-    />
+    /> -->
     <link rel="stylesheet" href="../styles/global.scss" />
     <link rel="stylesheet" href="../styles/editor.scss" />
     <link rel="stylesheet" href="../styles/codemirror.css" />
@@ -37,7 +37,6 @@
         </div>
         <div class="actions">
           <button title="Save" class="save">
-            <!-- <img src="../images/save.svg" /> -->
             <svg
               width="24"
               height="24"
@@ -107,9 +106,10 @@
     <main class="main-container editor">
       <div class="code">
         <textarea id="jsCode" placeholder="Loading..." spellcheck="false">
-console.log('Hello World!');</textarea
-        >
+          console.log('Hello World!');
+        </textarea>
       </div>
+      <div class="layout-separator"></div>
       <div class="preview">
         <div id="console-logs-empty" class="active">
           <div>

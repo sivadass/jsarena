@@ -138,7 +138,7 @@ function savingAnimation(isStart = true) {
 
 function save() {
   var jsCode = editor.getValue();
-  savingAnimation();
+  savingAnimation(true);
   if (!projectId) {
     postData(`${process.env.API_URL}/project`, {
       name: projectNameField.value,
