@@ -4,7 +4,6 @@ var urlParams = new URLSearchParams(window.location.search);
 const sessionCode = urlParams.get("code") || "";
 
 function main() {
-  console.log(sessionCode);
   if (sessionCode) {
     return postData(`${process.env.API_URL}/user/github-authorize`, {
       sessionCode: sessionCode,
