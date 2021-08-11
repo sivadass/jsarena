@@ -113,7 +113,7 @@ function main() {
 
 function goToLogin() {
   localStorage.removeItem("user");
-  const loginURL = `https://github.com/login/oauth/authorize?scope=login&client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_REDIRECT_URI}`;
+  const loginURL = `https://github.com/login/oauth/authorize?scope=user&client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_REDIRECT_URI}`;
   window.location.href = loginURL;
 }
 
