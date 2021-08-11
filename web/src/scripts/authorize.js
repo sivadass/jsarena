@@ -9,8 +9,7 @@ function main() {
       sessionCode: sessionCode,
     })
       .then((data) => {
-        console.log({ data });
-        localStorage.setItem("accessToken", data.access_token);
+        localStorage.setItem("user", JSON.stringify(data));
         window.location.href = "/";
       })
       .catch((err) => {

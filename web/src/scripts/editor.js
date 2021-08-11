@@ -18,6 +18,7 @@ runButtonEmpty.addEventListener("click", showPreview);
 loginButton.addEventListener("click", goToLogin);
 clearAllButton.addEventListener("click", clearAll);
 const accessToken = localStorage.getItem("accessToken");
+const user = localStorage.getItem("user");
 const urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
 
@@ -102,24 +103,16 @@ function main() {
         console.error(err);
       });
   }
-  if (accessToken) {
-    const headers = {
-      Authorization: `token ${accessToken}`,
-    };
-    getData(`https://api.github.com/user`, headers)
-      .then((data) => {
-        localStorage.setItem("user", JSON.stringify(data));
-        loginButton.setAttribute("class", "logged-in");
-        loginButton.firstElementChild.setAttribute("src", data.avatar_url);
-        authLabel.textContent = data.name;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  if (user) {
+    const userData = JSON.parse(user);
+    loginButton.setAttribute("class", "logged-in");
+    loginButton.firstElementChild.setAttribute("src", userData.avatar_url);
+    authLabel.textContent = userData.name;
   }
 }
 
 function goToLogin() {
+  localStorage.removeItem("user");
   const loginURL = `https://github.com/login/oauth/authorize?scope=login&client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_REDIRECT_URI}`;
   window.location.href = loginURL;
 }
