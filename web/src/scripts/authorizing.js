@@ -17,7 +17,7 @@ function main() {
         window.location.href = "/";
       });
   }
-  return;
+  window.location.href = "/";
 }
 
 window.addEventListener("load", main, false);

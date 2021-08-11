@@ -1,0 +1,15 @@
+.authorizing-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading {
+  text-align: center;
+  margin: 0 auto;
+  img {
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+}

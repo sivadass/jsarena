@@ -1,39 +1,184 @@
-.login-link {
-  border: none;
-  background: transparent;
-  padding: 8px 0;
-  color: #8bc34a;
-  font-size: 16px;
-  cursor: pointer;
+.preview {
+  width: 40%;
+  background: #f7f7f7;
+  iframe {
+    border: none;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+  }
 }
 
-.main-container {
+.code {
+  background: #193549;
+  width: 60%;
+  #jsCode {
+    display: block;
+    height: 100%;
+    width: 100%;
+    border: none;
+    background: #444;
+    color: #fff;
+    font-size: 18px;
+    padding: 16px;
+    &:focus,
+    &:active {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.editor {
   display: flex;
   width: 100%;
-  height: calc(100vh - 44px);
+  .preview {
+    height: 100%;
+    overflow-y: auto;
+    #console-logs {
+      overflow: auto;
+      max-height: 100%;
+    }
+    #console-logs-empty {
+      overflow: auto;
+      max-height: 100%;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 32px;
+      display: flex;
+      visibility: hidden;
+      height: 0;
+      opacity: 0;
+      transition: opacity 300ms ease-in;
+      p {
+        color: #999;
+        margin-bottom: 16px;
+      }
+      button {
+        background: #f7e04b;
+        border: none;
+      }
+      &.active {
+        visibility: visible;
+        height: calc(100vh - 52px);
+        opacity: 1;
+      }
+    }
+    .console-line-item {
+      padding: 4px 8px 4px 44px;
+      font-size: 14px;
+      border-bottom: 1px solid #ddd;
+      animation-name: fadeInDown;
+      animation-duration: 150ms;
+      animation-fill-mode: both;
+      animation-timing-function: ease-in-out;
+      animation-delay: calc(var(--animation-order) * 90ms);
+      white-space: pre-wrap;
+      line-height: 18px;
+      &:before {
+        display: inline-block;
+        counter-increment: consoleLogCounter;
+        content: counter(consoleLogCounter);
+        background: #ecead7;
+        color: #666;
+        width: 20px;
+        text-align: center;
+        height: 20px;
+        line-height: 20px;
+        border-radius: 4px;
+        margin-right: 12px;
+        font-size: 10px;
+        position: absolute;
+        left: 6px;
+      }
+      span {
+        margin: 0 4px;
+        &.object {
+          color: #222;
+        }
+        &.string {
+          color: red;
+        }
+        &.number {
+          color: blue;
+        }
+      }
+      &.error {
+        color: #ce2417;
+        background: #e8a1a145;
+      }
+    }
+  }
+  @media (max-width: 480px) {
+    flex-direction: column;
+    .code,
+    .preview {
+      width: 100%;
+    }
+    .code {
+      height: 60%;
+    }
+    .preview {
+      height: 40%;
+    }
+  }
 }
 
-.welcome {
-  text-align: center;
-  padding: 64px 0;
-  max-width: 400;
-  margin: 0 auto;
+.console-line-item-content {
+  // white-space: nowrap;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
 }
 
-.welcome h1 {
-  margin-bottom: 24px;
-}
-
-.welcome img {
-  max-width: 200px;
-  margin: 32px auto;
-}
-
-.auth-link {
-  margin-top: 16px;
-}
-
-.auth-error {
-  margin-bottom: 16px;
+.console-line-item-switch {
   display: none;
+  height: 0;
+  width: 0;
+  & + label {
+    &:before {
+      position: absolute;
+      content: "";
+      width: 0;
+      height: 0;
+      top: 10px;
+      left: 32px;
+      cursor: pointer;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      border-left: 4px solid #999;
+    }
+    & + .console-line-item-content {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  &:checked {
+    & + label {
+      &:before {
+        top: 13px;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid #333;
+      }
+      & + .console-line-item-content {
+        white-space: initial;
+        overflow: initial;
+        text-overflow: initial;
+      }
+    }
+  }
 }
