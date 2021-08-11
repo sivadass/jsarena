@@ -107,13 +107,13 @@
       span {
         margin: 0 4px;
         &.object {
-          color: #222;
+          color: #34495e;
         }
         &.string {
-          color: red;
+          color: #e74c3c;
         }
         &.number {
-          color: blue;
+          color: #2980b9;
         }
       }
       &.error {

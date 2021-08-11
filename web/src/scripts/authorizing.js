@@ -1,4 +1,5 @@
 import { postData } from "./utils/fetch";
+import { jwtDecode } from "./utils/jwtDecode";
 
 var urlParams = new URLSearchParams(window.location.search);
 const sessionCode = urlParams.get("code") || "";
@@ -9,7 +10,11 @@ function main() {
       sessionCode: sessionCode,
     })
       .then((data) => {
-        localStorage.setItem("user", JSON.stringify(data));
+        const token = data["auth-token"];
+        console.log("token", token);
+        const user = jwtDecode(token);
+        console.log("user", user);
+        localStorage.setItem("user", JSON.stringify(user));
         window.location.href = "/";
       })
       .catch((err) => {

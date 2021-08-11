@@ -10,14 +10,15 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
-      min: 6,
       max: 255,
+    },
+    gId: {
+      type: Number,
+      required: true,
     },
     password: {
       type: String,
-      required: true,
-      min: 6,
+      min: 4,
       max: 1024,
     },
     role: {
@@ -27,7 +28,7 @@ const userSchema = new mongoose.Schema(
     },
     activated: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   {

@@ -1,52 +1,8 @@
 const router = require("express").Router();
-const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 const User = require("../model/User");
-const { registerValidation, loginValidation } = require("../utils/validation");
-const sendEmail = require("../utils/sendMail");
-const messageWithActionTemplate = require("../emails/messageWithAction");
-const plainMessageTemplate = require("../emails/plainMessage");
 const verify = require("../middlewares/verifyToken");
-
-router.post("/register", async (req, res) => {
-  const { error } = registerValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
-
-  const emailExists = await User.findOne({ email: req.body.email });
-  if (emailExists) return res.status(400).send("Email already exists");
-
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(req.body.password, salt);
-
-  const user = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: hashPassword,
-    role: req.body.role,
-  });
-
-  try {
-    const savedUser = await user.save();
-    const msg = {
-      to: `${savedUser.name} <${savedUser.email}>`,
-      from: `JS Console <no-reply@jsconsole.ml>`,
-      subject: `Welcome to JS Console`,
-      html: plainMessageTemplate(
-        `Hi ${savedUser.name},`,
-        `Thanks for signing up with JS Console. We wish you a happing JS Programming Journey! <br/><br/> Please use the link below to access it: <br /> <a href="https://jsconsole.ml">https://jsconsole.ml</a>`
-      ),
-    };
-    try {
-      await sendEmail(msg);
-      res.send("Registered successfully!");
-    } catch (err) {
-      res.status(400).send(err);
-    }
-  } catch (err) {
-    res.status(400).send(err);
-  }
-});
 
 router.put("/profile", verify, async (req, res) => {
   try {
@@ -103,10 +59,50 @@ router.post("/github-authorize", async (req, res) => {
         });
         const profileData = profileResponse && profileResponse.data;
         if (profileData) {
-          console.log(profileData);
-          res.send(profileData);
+          const existingUser = await User.findOne({ gId: profileData.id });
+          if (existingUser) {
+            const token = jwt.sign(
+              {
+                _id: existingUser._id,
+                email: existingUser.email,
+                name: existingUser.name,
+              },
+              process.env.TOKEN_SECRET,
+              {
+                expiresIn: "24h",
+              }
+            );
+            res.header("auth-token", token).send({ "auth-token": token });
+          } else {
+            const user = new User({
+              name: profileData.name,
+              email: profileData.email || "",
+              gId: profileData.id,
+              role: "user",
+            });
+            try {
+              const savedUser = await user.save();
+              const token = jwt.sign(
+                {
+                  _id: savedUser._id,
+                  email: savedUser.email,
+                  name: savedUser.name,
+                },
+                process.env.TOKEN_SECRET,
+                {
+                  expiresIn: "24h",
+                }
+              );
+              res.header("auth-token", token).send({ "auth-token": token });
+            } catch (err) {
+              res.status(400).send(err);
+            }
+          }
         } else {
-          console.log(profileResponse);
+          console.log("unhandled case", profileResponse);
+          res
+            .status(400)
+            .send({ error: "Unknown error occurred in Github auth" });
         }
       } catch (err) {
         res.status(400).send(err);
