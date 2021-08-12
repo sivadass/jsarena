@@ -1,5 +1,5 @@
+import jwt_decode from "jwt-decode";
 import { postData } from "./utils/fetch";
-import { jwtDecode } from "./utils/jwtDecode";
 
 var urlParams = new URLSearchParams(window.location.search);
 const sessionCode = urlParams.get("code") || "";
@@ -10,10 +10,9 @@ function main() {
       sessionCode: sessionCode,
     })
       .then((data) => {
-        const token = data["auth-token"];
-        console.log("token", token);
-        const user = jwtDecode(token);
-        console.log("user", user);
+        const token = data["authToken"];
+        const user = jwt_decode(token);
+        localStorage.setItem("authToken", token);
         localStorage.setItem("user", JSON.stringify(user));
         window.location.href = "/";
       })

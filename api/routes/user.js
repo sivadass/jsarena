@@ -58,6 +58,7 @@ router.post("/github-authorize", async (req, res) => {
           headers: profileHeaders,
         });
         const profileData = profileResponse && profileResponse.data;
+        console.log("profileData", profileData);
         if (profileData) {
           const existingUser = await User.findOne({ gId: profileData.id });
           if (existingUser) {
@@ -72,7 +73,7 @@ router.post("/github-authorize", async (req, res) => {
                 expiresIn: "24h",
               }
             );
-            res.header("auth-token", token).send({ "auth-token": token });
+            res.send({ authToken: token });
           } else {
             const user = new User({
               name: profileData.name,
@@ -93,7 +94,7 @@ router.post("/github-authorize", async (req, res) => {
                   expiresIn: "24h",
                 }
               );
-              res.header("auth-token", token).send({ "auth-token": token });
+              res.send({ authToken: token });
             } catch (err) {
               res.status(400).send(err);
             }

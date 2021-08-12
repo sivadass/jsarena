@@ -12,11 +12,11 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // owner: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   required: true,
-    //   ref: "User",
-    // },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
   },
   {
     timestamps: true,

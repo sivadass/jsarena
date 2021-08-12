@@ -3,13 +3,13 @@ const Project = require("../model/Project");
 const { projectValidation } = require("../utils/validation");
 const verify = require("../middlewares/verifyToken");
 
-router.post("/", async (req, res) => {
+router.post("/", verify, async (req, res) => {
   const { error } = projectValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
   const category = new Project({
     name: req.body.name,
     code: req.body.code,
-    // owner: req.user._id,
+    owner: req.user._id,
   });
   try {
     const savedCategory = await category.save();
@@ -19,8 +19,10 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
-  let query = {};
+router.get("/", verify, async (req, res) => {
+  let query = {
+    owner: req.user._id,
+  };
   const excludedFields = ["-__v", "-owner"];
   try {
     const allCategories = await Project.find(query).select(excludedFields);
@@ -30,20 +32,25 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", verify, async (req, res) => {
+  let query = {
+    _id: req.params.id,
+    owner: req.user._id,
+  };
   try {
-    const projectDetails = await Project.findById(req.params.id);
+    const projectDetails = await Project.findOne(query);
     res.send(projectDetails);
   } catch (err) {
     res.status(400).send(err);
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", verify, async (req, res) => {
   try {
     Project.findOneAndUpdate(
       {
         _id: req.params.id,
+        owner: req.user._id,
       },
       {
         name: req.body.name,
@@ -61,7 +68,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verify, async (req, res) => {
   try {
     const data = await Project.deleteOne({ _id: req.params.id });
     if (data.ok === 1) {

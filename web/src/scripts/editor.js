@@ -17,7 +17,6 @@ runButton.addEventListener("click", showPreview);
 runButtonEmpty.addEventListener("click", showPreview);
 loginButton.addEventListener("click", goToLogin);
 clearAllButton.addEventListener("click", clearAll);
-const accessToken = localStorage.getItem("accessToken");
 const user = localStorage.getItem("user");
 const urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
@@ -106,7 +105,7 @@ function main() {
   if (user) {
     const userData = JSON.parse(user);
     loginButton.setAttribute("class", "logged-in");
-    loginButton.firstElementChild.setAttribute("src", userData.avatar_url);
+    loginButton.removeChild(loginButton.children[0]);
     authLabel.textContent = userData.name;
   }
 }

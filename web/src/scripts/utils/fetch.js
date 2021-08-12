@@ -1,9 +1,13 @@
+const authToken = localStorage.getItem("authToken") || "";
 export async function postData(url = "", data = {}) {
   const response = await fetch(url, {
     method: "POST",
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
+      ...(authToken && {
+        "Auth-Token": authToken,
+      }),
     },
     body: JSON.stringify(data),
   });
@@ -23,6 +27,9 @@ export async function putData(url = "", data = {}) {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
+      ...(authToken && {
+        "Auth-Token": authToken,
+      }),
     },
     body: JSON.stringify(data),
   });
@@ -41,6 +48,9 @@ export async function getData(url = "", options = {}) {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
+      ...(authToken && {
+        "Auth-Token": authToken,
+      }),
       ...options,
     },
   };
