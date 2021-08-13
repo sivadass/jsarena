@@ -1,7 +1,9 @@
 import { getData } from "./utils/fetch";
+import { initializeHeader } from "./utils/common";
 const heroPlaceholder = document.querySelector(".hero-placeholder");
 
 function main() {
+  initializeHeader();
   return getData(`${process.env.API_URL}/project`)
     .then((data) => {
       createListWithTemplate(data);

@@ -1,23 +1,19 @@
 import CodeMirror from "../scripts/codemirror/codemirror";
 import "../scripts/codemirror/addon/edit/closebrackets";
 import "../scripts/codemirror/mode/javascript";
-import { putData, postData, getData } from "./utils/fetch";
-import { hasAnything, debounce, getOS } from "./utils/common";
+import { putData, postData, getData, handleError } from "./utils/fetch";
+import { hasAnything, debounce, getOS, initializeHeader } from "./utils/common";
 const saveButton = document.querySelector("button.save");
 const runButton = document.querySelector("button.run");
-const loginButton = document.querySelector("button.login");
 const runButtonEmpty = document.querySelector("button.run-empty");
 const clearAllButton = document.querySelector("button.clear-all");
 const jsCodeField = document.getElementById("jsCode");
 const projectNameField = document.querySelector("input.project-name");
-const authLabel = loginButton.getElementsByTagName("span")[0];
 
 saveButton.addEventListener("click", save);
 runButton.addEventListener("click", showPreview);
 runButtonEmpty.addEventListener("click", showPreview);
-loginButton.addEventListener("click", goToLogin);
 clearAllButton.addEventListener("click", clearAll);
-const user = localStorage.getItem("user");
 const urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
 
@@ -92,6 +88,7 @@ function main() {
     OS === "MacOS" ? "CMD+R" : "CTRL+R";
   clearAllButton.getElementsByTagName("span")[0].innerText =
     OS === "MacOS" ? "CMD+L" : "CTRL+L";
+  initializeHeader();
   if (projectId) {
     getData(`${process.env.API_URL}/project/${projectId}`)
       .then((data) => {
@@ -99,21 +96,9 @@ function main() {
         projectNameField.value = data.name;
       })
       .catch((err) => {
-        console.error(err);
+        handleError(err);
       });
   }
-  if (user) {
-    const userData = JSON.parse(user);
-    loginButton.setAttribute("class", "logged-in");
-    loginButton.removeChild(loginButton.children[0]);
-    authLabel.textContent = userData.name;
-  }
-}
-
-function goToLogin() {
-  localStorage.removeItem("user");
-  const loginURL = `https://github.com/login/oauth/authorize?scope=user&client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_REDIRECT_URI}`;
-  window.location.href = loginURL;
 }
 
 function savingAnimation(isStart = true) {

@@ -149,6 +149,28 @@ pre {
   }
 }
 
+.account-details {
+  position: absolute;
+  top: 51px;
+  right: 16px;
+  width: 180px;
+  height: 68px;
+  border-radius: 8px;
+  background-color: #666;
+  padding: 16px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 200ms ease-in;
+  &.open {
+    visibility: visible;
+    opacity: 1;
+  }
+  button {
+    width: 100%;
+    border-color: #fff;
+  }
+}
+
 .main-container {
   height: calc(100vh - 52px);
 }

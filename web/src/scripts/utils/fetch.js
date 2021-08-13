@@ -15,7 +15,6 @@ export async function postData(url = "", data = {}) {
     return response.json();
   } else {
     return response.text().then((text) => {
-      console.log("==>", text);
       throw new Error(text);
     });
   }
@@ -62,4 +61,18 @@ export async function getData(url = "", options = {}) {
       throw new Error(text);
     });
   }
+}
+
+export function handleError(error) {
+  const { message = "" } = error;
+  if (error.message) {
+    if (message === "Access denied!") {
+      window.location.href = "/forbidden.html";
+    }
+    if (message === "Not found!") {
+      window.location.href = "/not-found.html";
+    }
+  }
+  console.error(error);
+  return;
 }

@@ -17,6 +17,10 @@ const projectSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
+    isPublic: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

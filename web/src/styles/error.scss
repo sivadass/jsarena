@@ -1,0 +1,22 @@
+/* Error Pages */
+.error-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .error {
+    padding: 16px;
+    h1 {
+      font-size: 120px;
+      opacity: 0.5;
+    }
+    p {
+      margin-bottom: 24px;
+    }
+    a {
+      display: inline-block;
+      padding: 8px 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  }
+}

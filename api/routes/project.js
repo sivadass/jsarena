@@ -39,7 +39,11 @@ router.get("/:id", verify, async (req, res) => {
   };
   try {
     const projectDetails = await Project.findOne(query);
-    res.send(projectDetails);
+    if (projectDetails !== null) {
+      res.send(projectDetails);
+    } else {
+      res.status(404).send("Not found!");
+    }
   } catch (err) {
     res.status(400).send(err);
   }
