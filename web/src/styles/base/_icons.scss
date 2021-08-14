@@ -1,0 +1,97 @@
+@font-face {
+  font-family: "JSC-Icon";
+  src: url("../fonts/jsc-icon/JSC-Icon.ttf?tpa3mw") format("truetype"),
+    url("../fonts/jsc-icon/JSC-Icon.woff?tpa3mw") format("woff"),
+    url("../fonts/jsc-icon/JSC-Icon.svg?tpa3mw#JSC-Icon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+i {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "JSC-Icon" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.jsc-icon-github:before {
+  content: "\e90b";
+}
+.jsc-icon-user:before {
+  content: "\e90a";
+}
+.jsc-icon-toggle-on:before {
+  content: "\e908";
+}
+.jsc-icon-toggle-off:before {
+  content: "\e909";
+}
+.jsc-icon-run:before {
+  content: "\e900";
+}
+.jsc-icon-clear-all:before {
+  content: "\e901";
+}
+.jsc-icon-chat-bubble:before {
+  content: "\e90c";
+}
+.jsc-icon-clear:before {
+  content: "\e90d";
+}
+.jsc-icon-save:before {
+  content: "\e902";
+}
+.jsc-icon-folder:before {
+  content: "\e903";
+}
+.jsc-icon-radio-off:before {
+  content: "\e90e";
+}
+.jsc-icon-cancel:before {
+  content: "\e90f";
+}
+.jsc-icon-fullscreen:before {
+  content: "\e910";
+}
+.jsc-icon-fullscreen-exit:before {
+  content: "\e911";
+}
+.jsc-icon-more:before {
+  content: "\e904";
+}
+.jsc-icon-share:before {
+  content: "\e905";
+}
+.jsc-icon-check-box-on:before {
+  content: "\e912";
+}
+.jsc-icon-check-box-off:before {
+  content: "\e913";
+}
+.jsc-icon-radio-on:before {
+  content: "\e914";
+}
+.jsc-icon-check-circle-filled:before {
+  content: "\e915";
+}
+.jsc-icon-delete:before {
+  content: "\e906";
+}
+.jsc-icon-info:before {
+  content: "\e916";
+}
+.jsc-icon-check-circle-outline:before {
+  content: "\e917";
+}
+.jsc-icon-logout:before {
+  content: "\e918";
+}
