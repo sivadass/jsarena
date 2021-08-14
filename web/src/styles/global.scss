@@ -12,79 +12,36 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 16px;
+    padding: 6px 12px;
   }
   .brand {
     img {
-      width: 140px;
+      width: 98px;
+      vertical-align: middle;
     }
   }
   .actions {
     // display: flex;
     a,
     button {
-      padding: 0 8px;
+      padding: 0 6px;
       color: #fff;
-      height: 36px;
+      height: 28px;
       vertical-align: middle;
       background: #666;
-      img,
-      svg {
-        width: 24px;
-        height: 24px;
-        // opacity: 0.66;
-        vertical-align: middle;
-        &.avatar {
-          border-radius: 18px;
-        }
+      i {
+        font-size: 20px;
+        vertical-align: text-bottom;
       }
       &.login {
         width: auto;
-        color: #222;
-        background: #f7e04b;
+        background: transparent;
         padding: 0 8px;
-        img {
-          opacity: 1;
-          height: 24px;
-          width: 24px;
+        i {
+          font-size: 24px;
+          vertical-align: middle;
         }
       }
-      &.logged-in {
-        color: #fff;
-        img {
-          border-radius: 18px;
-          opacity: 1;
-        }
-        width: auto;
-      }
-    }
-  }
-  .project-link {
-    display: flex;
-    align-items: center;
-    color: #999;
-    span {
-      margin: 0 4px;
-      color: #ddd;
-    }
-    input {
-      border: none;
-      background: transparent;
-      height: 32px;
-      color: #999;
-      padding: 0 4px;
-      &:focus {
-        background: #333;
-      }
-    }
-    @media (max-width: 480px) {
-      position: absolute;
-      top: 52px;
-      left: 0;
-      width: 100%;
-      background: #232323;
-      border-top: 1px solid #111;
-      padding: 0 16px;
     }
   }
 }
@@ -112,7 +69,7 @@
 }
 
 .main-container {
-  height: calc(100vh - 52px);
+  height: calc(100vh - 40px);
 }
 
 /* Form Controls */

@@ -1,6 +1,28 @@
-.preview {
+.index-page {
+  overflow: auto;
+}
+
+.console {
   width: 40%;
   background: #f7f7f7;
+  .console-header {
+    background: #999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+    button {
+      padding: 0 6px;
+      color: #fff;
+      height: 28px;
+      vertical-align: middle;
+      background: #666;
+      i {
+        font-size: 20px;
+        vertical-align: text-bottom;
+      }
+    }
+  }
   iframe {
     border: none;
     width: 0;
@@ -11,10 +33,57 @@
 
 .code {
   background: #193549;
+  height: calc(100vh - 40px);
   width: 60%;
+  .code-header {
+    background: #666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+    button {
+      padding: 0 6px;
+      color: #fff;
+      height: 28px;
+      vertical-align: middle;
+      background: #666;
+      i {
+        font-size: 20px;
+        vertical-align: text-bottom;
+      }
+    }
+    .project-link {
+      display: flex;
+      align-items: center;
+      color: #222;
+      span {
+        margin: 0 4px;
+        color: #ddd;
+      }
+      input {
+        border: none;
+        background: transparent;
+        height: 28px;
+        color: #222;
+        padding: 0 4px;
+        &:focus {
+          background: #333;
+        }
+      }
+      @media (max-width: 480px) {
+        position: absolute;
+        top: 52px;
+        left: 0;
+        width: 100%;
+        background: #232323;
+        border-top: 1px solid #111;
+        padding: 0 16px;
+      }
+    }
+  }
   #jsCode {
     display: block;
-    height: 100%;
+    height: calc(100vh - 80px);
     width: 100%;
     border: none;
     background: #444;
@@ -44,16 +113,15 @@
 .editor {
   display: flex;
   width: 100%;
-  .preview {
-    height: 100%;
-    overflow-y: auto;
+  .console {
+    height: calc(100vh - 40px);
+
     #console-logs {
       overflow: auto;
-      max-height: 100%;
+      height: calc(100vh - 80px);
     }
     #console-logs-empty {
       overflow: auto;
-      max-height: 100%;
       align-items: center;
       justify-content: center;
       text-align: center;
@@ -73,7 +141,7 @@
       }
       &.active {
         visibility: visible;
-        height: calc(100vh - 52px);
+        height: auto;
         opacity: 1;
       }
     }
@@ -125,13 +193,13 @@
   @media (max-width: 480px) {
     flex-direction: column;
     .code,
-    .preview {
+    .console {
       width: 100%;
     }
     .code {
       height: 60%;
     }
-    .preview {
+    .console {
       height: 40%;
     }
   }

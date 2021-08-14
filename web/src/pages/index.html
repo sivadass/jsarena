@@ -15,35 +15,13 @@
     <link rel="stylesheet" href="../styles/monokai.css" />
   </head>
 
-  <body>
+  <body class="index-page">
     <header class="header">
       <div class="container">
         <a class="brand" href="/">
           <img src="../images/logo.svg" alt="JS Console" />
         </a>
-        <div class="project-link">
-          <a href="../pages/projects.html">My Projects</a>
-          <span>/</span>
-          <input
-            name="project-name"
-            class="project-name"
-            type="text"
-            value="New Project"
-          />
-        </div>
         <div class="actions">
-          <button title="Save" class="save">
-            <i class="jsc-icon-save"></i>
-            <span></span>
-          </button>
-          <button title="Run" class="run">
-            <i class="jsc-icon-run"></i>
-            <span></span>
-          </button>
-          <button title="Clear All Logs" class="clear-all">
-            <i class="jsc-icon-clear-all"></i>
-            <span></span>
-          </button>
           <button title="Login" class="login">
             <i class="jsc-icon-github"></i>
             <span>Login with Github</span>
@@ -61,6 +39,28 @@
     </header>
     <main class="main-container editor">
       <div class="code">
+        <div class="code-header">
+          <div>
+            <div class="project-link">
+              <a href="../pages/projects.html">
+                <i class="jsc-icon-folder"></i>
+              </a>
+              <span>/</span>
+              <input
+                name="project-name"
+                class="project-name"
+                type="text"
+                value="New Project"
+              />
+            </div>
+          </div>
+          <div>
+            <button title="Save" class="save">
+              <i class="jsc-icon-save"></i>
+              <span></span>
+            </button>
+          </div>
+        </div>
         <textarea
           id="jsCode"
           placeholder="Loading..."
@@ -68,7 +68,22 @@
         ></textarea>
       </div>
       <div class="layout-separator"></div>
-      <div class="preview">
+      <div class="console">
+        <div class="console-header">
+          <div>
+            <h4>Console</h4>
+          </div>
+          <div>
+            <button title="Run" class="run">
+              <i class="jsc-icon-run"></i>
+              <span></span>
+            </button>
+            <button title="Clear All Logs" class="clear-all">
+              <i class="jsc-icon-clear-all"></i>
+              <span></span>
+            </button>
+          </div>
+        </div>
         <div id="console-logs-empty" class="active">
           <div>
             <p>Hey, please click the run button to view logs here</p>
