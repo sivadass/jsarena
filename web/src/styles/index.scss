@@ -1,5 +1,9 @@
 .index-page {
   overflow: hidden;
+  height: 100vh;
+  max-height: -moz-available; /* WebKit-based browsers will ignore this. */
+  max-height: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+  max-height: fill-available;
 }
 
 .console {
@@ -78,15 +82,6 @@
         &:focus {
           background: #444;
         }
-      }
-      @media (max-width: 480px) {
-        position: absolute;
-        top: 52px;
-        left: 0;
-        width: 100%;
-        background: #232323;
-        border-top: 1px solid #111;
-        padding: 0 16px;
       }
     }
   }
