@@ -1,3 +1,4 @@
+import { login } from "./common";
 const authToken = localStorage.getItem("authToken") || "";
 export async function postData(url = "", data = {}) {
   const response = await fetch(url, {
@@ -65,6 +66,7 @@ export async function getData(url = "", options = {}) {
 
 export function handleError(error) {
   const { message = "" } = error;
+  console.log("message", message);
   if (error.message) {
     if (message === "Access denied!") {
       window.location.href = "/forbidden.html";
@@ -72,7 +74,10 @@ export function handleError(error) {
     if (message === "Not found!") {
       window.location.href = "/not-found.html";
     }
+    if (message === "Unauthorized!") {
+      login();
+    }
   }
-  console.error(error);
+  // console.error(error);
   return;
 }

@@ -8,12 +8,17 @@ const runButton = document.querySelector("button.run");
 const runButtonEmpty = document.querySelector("button.run-empty");
 const clearAllButton = document.querySelector("button.clear-all");
 const jsCodeField = document.getElementById("jsCode");
+const layoutContainer = document.querySelector("main.editor");
+const layoutSeparator = document.querySelector("div.layout-separator");
+const codeColumn = document.querySelector("div.code");
+const consoleColumn = document.querySelector("div.console");
 const projectNameField = document.querySelector("input.project-name");
 
 saveButton.addEventListener("click", save);
 runButton.addEventListener("click", showPreview);
 runButtonEmpty.addEventListener("click", showPreview);
 clearAllButton.addEventListener("click", clearAll);
+layoutSeparator.addEventListener("mousedown", resizeColumn);
 const urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
 
@@ -22,6 +27,8 @@ let iframeWin = iframe.contentWindow || iframe;
 let consoleLogsContainer = document.getElementById("console-logs");
 let consoleLogsEmpty = document.getElementById("console-logs-empty");
 let panel = parent.document.getElementById("console-logs");
+let isResizing = false;
+let readOnly = false;
 let animationDelay = -1;
 iframeWin.console = {
   panel: panel,
@@ -70,15 +77,21 @@ var editor = CodeMirror.fromTextArea(jsCodeField, {
   indentWithTabs: true,
   autoCloseTags: true,
   autoCloseBrackets: true,
-  // extraKeys: {
-  //   "Ctrl-/": editor.execCommand("toggleComment"),
-  // },
+  readOnly: readOnly,
 });
 
 editor.on(
   "change",
   debounce(() => save(), 1000)
 );
+
+// editor.on(
+//   "refresh",
+//   debounce(() => {
+//     const { height } = codeColumn.getBoundingClientRect();
+//     editor.setSize("100%", `${height - 36}px`);
+//   }, 1000)
+// );
 
 function main() {
   const OS = getOS();
@@ -89,7 +102,11 @@ function main() {
   clearAllButton.getElementsByTagName("span")[0].innerText =
     OS === "MacOS" ? "CMD+L" : "CTRL+L";
   initializeHeader();
+  const { height } = codeColumn.getBoundingClientRect();
+  editor.setSize("100%", `${height - 36}px`);
   if (projectId) {
+    readOnly = true;
+    console.log("in main 1", readOnly);
     getData(`${process.env.API_URL}/project/${projectId}`)
       .then((data) => {
         editor.setValue(data.code);
@@ -97,7 +114,12 @@ function main() {
       })
       .catch((err) => {
         handleError(err);
+      })
+      .finally(() => {
+        readOnly = false;
+        console.log("in finally");
       });
+    console.log("in main 2", readOnly);
   }
 }
 
@@ -116,6 +138,7 @@ function savingAnimation(isStart = true) {
 function save() {
   var jsCode = editor.getValue();
   savingAnimation(true);
+  readOnly = true;
   if (!projectId) {
     postData(`${process.env.API_URL}/project`, {
       name: projectNameField.value,
@@ -127,10 +150,11 @@ function save() {
         window.location.search = urlParams.toString();
       })
       .catch((err) => {
-        console.error(err);
+        handleError(err);
       })
       .finally(() => {
         savingAnimation(false);
+        readOnly = false;
       });
   } else {
     putData(`${process.env.API_URL}/project/${projectId}`, {
@@ -141,10 +165,11 @@ function save() {
         // iframeWin.eval(jsCode);
       })
       .catch((err) => {
-        console.error(err);
+        handleError(err);
       })
       .finally(() => {
         savingAnimation(false);
+        readOnly = false;
       });
   }
 }
@@ -201,5 +226,31 @@ function hotKeys(e) {
   }
 }
 
+function resizeColumn() {
+  isResizing = true;
+}
+
+function onMouseMove(e) {
+  if (!isResizing) {
+    return;
+  }
+  const { x, width } = layoutContainer.getBoundingClientRect();
+  const separatorPosition = width - (e.clientX - x);
+  const codeColumnWidth = `${width - separatorPosition}px`;
+  const consoleColumnWidth = `${separatorPosition}px`;
+  if (width - separatorPosition >= 420 && separatorPosition >= 360) {
+    codeColumn.style.width = codeColumnWidth;
+    consoleColumn.style.width = consoleColumnWidth;
+  }
+}
+
+function onMouseUp() {
+  isResizing = false;
+}
+
+console.log("==> ", readOnly);
+
 window.addEventListener("load", main, false);
 window.addEventListener("keydown", hotKeys, false);
+document.addEventListener("mousemove", onMouseMove, false);
+document.addEventListener("mouseup", onMouseUp, false);

@@ -13,9 +13,9 @@ router.post("/", verify, async (req, res) => {
   });
   try {
     const savedCategory = await category.save();
-    res.send(savedCategory);
+    return res.send(savedCategory);
   } catch (err) {
-    res.status(400).send(err);
+    return res.status(400).send(err);
   }
 });
 
