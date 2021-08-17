@@ -41,6 +41,7 @@ export const clearAuthData = () => {
 };
 
 export const login = () => {
+  console.log("goto login");
   clearAuthData();
   const loginURL = `https://github.com/login/oauth/authorize?scope=user&client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_REDIRECT_URI}`;
   window.location.href = loginURL;

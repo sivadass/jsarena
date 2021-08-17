@@ -15,25 +15,41 @@
     <link rel="stylesheet" href="../styles/monokai.css" />
   </head>
 
-  <body class="index-page">
+  <body id="root" class="index-page">
     <header class="header">
       <div class="container">
         <a class="brand" href="/">
           <img src="../images/logo.svg" alt="JS Console" />
         </a>
         <div class="actions">
+          <a
+            href="https://www.paypal.com/paypalme/nsivadass"
+            title="Donate"
+            target="_blank"
+            class="donate"
+          >
+            <i class="jsc-icon-coffee-cup"></i>
+            <span>Donate</span>
+          </a>
+          <button title="Share" class="share">
+            <i class="jsc-icon-share"></i>
+            <span>Share</span>
+          </button>
           <button title="Login" class="login">
             <i class="jsc-icon-github"></i>
             <span>Login with Github</span>
           </button>
           <button title="Account" class="account">
-            <span></span>
+            <i class="jsc-icon-user"></i>
+            <span>Loading</span>
           </button>
           <div class="account-details">
-            <button title="Logout" class="logout">
+            <a title="My Projects" href="projects.html" class="my-projects">
+              <i class="jsc-icon-folder"></i>
               <span>My Projects</span>
-            </button>
+            </a>
             <button title="Logout" class="logout">
+              <i class="jsc-icon-logout"></i>
               <span>Logout</span>
             </button>
           </div>

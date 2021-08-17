@@ -2,11 +2,13 @@ import CodeMirror from "../scripts/codemirror/codemirror";
 import "../scripts/codemirror/addon/edit/closebrackets";
 import "../scripts/codemirror/mode/javascript";
 import { putData, postData, getData, handleError } from "./utils/fetch";
+import Toastify from "../scripts/utils/toast";
 import { hasAnything, debounce, getOS, initializeHeader } from "./utils/common";
 const saveButton = document.querySelector("button.save");
 const runButton = document.querySelector("button.run");
 const runButtonEmpty = document.querySelector("button.run-empty");
 const clearAllButton = document.querySelector("button.clear-all");
+const shareButton = document.querySelector("button.share");
 const jsCodeField = document.getElementById("jsCode");
 const layoutContainer = document.querySelector("main.editor");
 const layoutSeparator = document.querySelector("div.layout-separator");
@@ -18,6 +20,7 @@ saveButton.addEventListener("click", save);
 runButton.addEventListener("click", showPreview);
 runButtonEmpty.addEventListener("click", showPreview);
 clearAllButton.addEventListener("click", clearAll);
+shareButton.addEventListener("click", share);
 layoutSeparator.addEventListener("mousedown", resizeColumn);
 const urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
@@ -133,6 +136,19 @@ function savingAnimation(isStart = true) {
       elements[i].endElement();
     }
   }
+}
+
+function share() {
+  navigator.clipboard.writeText(window.location.href);
+  Toastify({
+    text: "Share URL copied to clipboard",
+    duration: 3000,
+    close: true,
+    gravity: "bottom",
+    position: "right",
+    stopOnFocus: true,
+    className: "toastify-success",
+  }).showToast();
 }
 
 function save() {

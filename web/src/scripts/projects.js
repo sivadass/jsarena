@@ -1,4 +1,4 @@
-import { getData } from "./utils/fetch";
+import { getData, handleError } from "./utils/fetch";
 import { initializeHeader } from "./utils/common";
 const heroPlaceholder = document.querySelector(".hero-placeholder");
 
@@ -9,7 +9,7 @@ function main() {
       createListWithTemplate(data);
     })
     .catch((err) => {
-      console.error(err);
+      handleError(err);
     });
 }
 

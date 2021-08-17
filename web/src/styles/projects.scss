@@ -1,18 +1,28 @@
+.my-projects-page {
+  .header {
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+  }
+}
+
 .projects {
   max-width: 960px;
   margin: 0 auto;
+  padding: 16px;
   h1 {
     margin: 32px 0;
   }
 }
 
 .hero-list {
-  margin: 32px auto;
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: repeat(5, 1fr);
+  margin: 32px -16px;
+  display: block;
   li {
-    width: 200px;
+    width: 33.33%;
+    display: inline-block;
+    float: left;
     background: #f7f7f7;
     margin-bottom: 16px;
     border-radius: 8px;
@@ -28,6 +38,9 @@
       color: #999;
       border-radius: 8px;
       padding: 8px;
+    }
+    @media (max-width: 480px) {
+      width: 50%;
     }
   }
 }

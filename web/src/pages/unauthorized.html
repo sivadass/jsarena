@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Forbidden - JS Console</title>
+    <title>Unauthorized - JS Console</title>
     <meta name="description" content="JS Live Code Editor" />
     <meta name="author" content="Sivadass N" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,19 +13,22 @@
   </head>
 
   <body>
-    <header class="header">
-      <div class="container">
-        <a class="brand" href="/">
-          <img src="../images/logo.svg" alt="JS Console" />
-        </a>
-      </div>
-    </header>
     <main class="main-container error-page">
       <div class="container error">
-        <h1>403</h1>
-        <p>Sorry, you don't have permission to access this page!</p>
-        <a href="/">Go back to home</a>
+        <a class="back" href="/"
+          ><i class="jsc-icon-arrow-back"></i> <span>Back to Home</span></a
+        >
+        <a class="brand" href="/">
+          <img src="../images/logo-black.svg" alt="JS Console" />
+        </a>
+        <h1>401</h1>
+        <p>
+          Sorry, you don't have access to this page!
+          <br />Please check the page after logging in.
+        </p>
+        <button class="login">Login / SignUp Now!</button>
       </div>
     </main>
+    <script type="module" src="../scripts/unauthorized.js"></script>
   </body>
 </html>

@@ -5,18 +5,29 @@
   align-items: center;
   .error {
     padding: 16px;
+    img {
+      width: 164px;
+      margin-bottom: 32px;
+      display: block;
+    }
     h1 {
       font-size: 120px;
       opacity: 0.5;
     }
     p {
       margin-bottom: 24px;
+      line-height: 24px;
     }
     a {
-      display: inline-block;
-      padding: 8px 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      &.back {
+        margin-bottom: 16px;
+        display: inline-block;
+      }
+    }
+    button {
+      &.login {
+        background: #f7e04b;
+      }
     }
   }
 }

@@ -13,19 +13,19 @@
   </head>
 
   <body>
-    <header class="header">
-      <div class="container">
-        <a class="brand" href="/">
-          <img src="../images/logo.svg" alt="JS Console" />
-        </a>
-      </div>
-    </header>
     <main class="main-container error-page">
       <div class="container error">
+        <a class="back" href="/"
+          ><i class="jsc-icon-arrow-back"></i> <span>Back to Home</span></a
+        >
+        <a class="brand" href="/">
+          <img src="../images/logo-black.svg" alt="JS Console" />
+        </a>
         <h1>404</h1>
         <p>Sorry, the page you're looking for is not found!</p>
-        <a href="/">Go back to home</a>
+        <button class="login">Login / SignUp Now!</button>
       </div>
     </main>
+    <script type="module" src="../scripts/unauthorized.js"></script>
   </body>
 </html>

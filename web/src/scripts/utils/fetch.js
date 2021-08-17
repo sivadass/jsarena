@@ -1,3 +1,4 @@
+import Toastify from "./toast";
 import { login } from "./common";
 const authToken = localStorage.getItem("authToken") || "";
 export async function postData(url = "", data = {}) {
@@ -66,18 +67,22 @@ export async function getData(url = "", options = {}) {
 
 export function handleError(error) {
   const { message = "" } = error;
-  console.log("message", message);
+  Toastify({
+    text: message,
+    duration: 3000,
+    close: true,
+    gravity: "bottom",
+    position: "right",
+    stopOnFocus: true,
+    className: "toastify-error",
+  }).showToast();
   if (error.message) {
-    if (message === "Access denied!") {
-      window.location.href = "/forbidden.html";
-    }
     if (message === "Not found!") {
       window.location.href = "/not-found.html";
     }
-    if (message === "Unauthorized!") {
-      login();
+    if (["Access denied!", "Unauthorized!"].includes(message)) {
+      window.location.href = "/unauthorized.html";
     }
   }
-  // console.error(error);
   return;
 }

@@ -23,6 +23,9 @@ i {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.jsc-icon-coffee-cup:before {
+  content: "\e919";
+}
 .jsc-icon-github:before {
   content: "\e90b";
 }
@@ -56,6 +59,12 @@ i {
 .jsc-icon-radio-off:before {
   content: "\e90e";
 }
+.jsc-icon-arrow-back:before {
+  content: "\e91a";
+}
+.jsc-icon-arrow-forward:before {
+  content: "\e91b";
+}
 .jsc-icon-cancel:before {
   content: "\e90f";
 }
@@ -67,6 +76,12 @@ i {
 }
 .jsc-icon-more:before {
   content: "\e904";
+}
+.jsc-icon-caret-back:before {
+  content: "\e91c";
+}
+.jsc-icon-caret-forward:before {
+  content: "\e91d";
 }
 .jsc-icon-share:before {
   content: "\e905";

@@ -33,7 +33,8 @@
         font-size: 20px;
         vertical-align: text-bottom;
       }
-      &.login {
+      &.login,
+      &.account {
         width: auto;
         background: transparent;
         padding: 0 8px;
@@ -42,6 +43,19 @@
           vertical-align: middle;
         }
       }
+      @media (max-width: 480x) {
+        &.account {
+          span {
+            display: none;
+          }
+        }
+      }
+    }
+    a {
+      height: 28px;
+      line-height: 28px;
+      border-radius: 8px;
+      display: inline-block;
     }
   }
 }
