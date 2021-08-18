@@ -3,7 +3,13 @@ import "../scripts/codemirror/addon/edit/closebrackets";
 import "../scripts/codemirror/mode/javascript";
 import { putData, postData, getData, handleError } from "./utils/fetch";
 import Toastify from "../scripts/utils/toast";
-import { hasAnything, debounce, getOS, initializeHeader } from "./utils/common";
+import {
+  hasAnything,
+  debounce,
+  getOS,
+  initializeHeader,
+  login,
+} from "./utils/common";
 const saveButton = document.querySelector("button.save");
 const runButton = document.querySelector("button.run");
 const runButtonEmpty = document.querySelector("button.run-empty");
@@ -15,8 +21,9 @@ const layoutSeparator = document.querySelector("div.layout-separator");
 const codeColumn = document.querySelector("div.code");
 const consoleColumn = document.querySelector("div.console");
 const projectNameField = document.querySelector("input.project-name");
+const user = localStorage.getItem("user");
 
-saveButton.addEventListener("click", save);
+saveButton.addEventListener("click", saveCode);
 runButton.addEventListener("click", showPreview);
 runButtonEmpty.addEventListener("click", showPreview);
 clearAllButton.addEventListener("click", clearAll);
@@ -98,8 +105,12 @@ editor.on(
 
 function main() {
   const OS = getOS();
-  saveButton.getElementsByTagName("span")[0].innerText =
-    OS === "MacOS" ? "CMD+S" : "CTRL+S";
+  if (user) {
+    saveButton.getElementsByTagName("span")[0].innerText =
+      OS === "MacOS" ? "CMD+S" : "CTRL+S";
+  } else {
+    saveButton.getElementsByTagName("span")[0].innerText = "Login & Save!";
+  }
   runButton.getElementsByTagName("span")[0].innerText =
     OS === "MacOS" ? "CMD+R" : "CTRL+R";
   clearAllButton.getElementsByTagName("span")[0].innerText =
@@ -109,7 +120,6 @@ function main() {
   editor.setSize("100%", `${height - 36}px`);
   if (projectId) {
     readOnly = true;
-    console.log("in main 1", readOnly);
     getData(`${process.env.API_URL}/project/${projectId}`)
       .then((data) => {
         editor.setValue(data.code);
@@ -120,9 +130,10 @@ function main() {
       })
       .finally(() => {
         readOnly = false;
-        console.log("in finally");
       });
-    console.log("in main 2", readOnly);
+  } else {
+    const code = localStorage.getItem("JSA_Code") || "";
+    editor.setValue(code);
   }
 }
 
@@ -151,42 +162,55 @@ function share() {
   }).showToast();
 }
 
+function saveCode() {
+  if (user) {
+    save();
+  } else {
+    login();
+  }
+}
+
 function save() {
   var jsCode = editor.getValue();
-  savingAnimation(true);
   readOnly = true;
-  if (!projectId) {
-    postData(`${process.env.API_URL}/project`, {
-      name: projectNameField.value,
-      code: `${jsCode}`,
-    })
-      .then((data) => {
-        const id = data._id;
-        urlParams.set("id", id);
-        window.location.search = urlParams.toString();
+  if (user) {
+    savingAnimation(true);
+    if (!projectId) {
+      postData(`${process.env.API_URL}/project`, {
+        name: projectNameField.value,
+        code: `${jsCode}`,
       })
-      .catch((err) => {
-        handleError(err);
+        .then((data) => {
+          const id = data._id;
+          urlParams.set("id", id);
+          window.location.search = urlParams.toString();
+        })
+        .catch((err) => {
+          handleError(err);
+        })
+        .finally(() => {
+          savingAnimation(false);
+          localStorage.removeItem("JSA_Code");
+          readOnly = false;
+        });
+    } else {
+      putData(`${process.env.API_URL}/project/${projectId}`, {
+        name: projectNameField.value,
+        code: `${jsCode}`,
       })
-      .finally(() => {
-        savingAnimation(false);
-        readOnly = false;
-      });
+        .then((data) => {
+          // iframeWin.eval(jsCode);
+        })
+        .catch((err) => {
+          handleError(err);
+        })
+        .finally(() => {
+          savingAnimation(false);
+          readOnly = false;
+        });
+    }
   } else {
-    putData(`${process.env.API_URL}/project/${projectId}`, {
-      name: projectNameField.value,
-      code: `${jsCode}`,
-    })
-      .then((data) => {
-        // iframeWin.eval(jsCode);
-      })
-      .catch((err) => {
-        handleError(err);
-      })
-      .finally(() => {
-        savingAnimation(false);
-        readOnly = false;
-      });
+    localStorage.setItem("JSA_Code", `${jsCode}`);
   }
 }
 
@@ -227,7 +251,7 @@ function hotKeys(e) {
   let windowEvent = window ? window.event : e;
   if (windowEvent.keyCode === 83 && windowEvent.metaKey) {
     e.preventDefault();
-    save();
+    saveCode();
   }
   if (
     (windowEvent.keyCode === 82 && windowEvent.metaKey) ||

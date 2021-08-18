@@ -35,7 +35,6 @@ router.get("/", verify, async (req, res) => {
 router.get("/:id", verify, async (req, res) => {
   let query = {
     _id: req.params.id,
-    owner: req.user._id,
   };
   try {
     const projectDetails = await Project.findOne(query);
@@ -54,7 +53,6 @@ router.put("/:id", verify, async (req, res) => {
     Project.findOneAndUpdate(
       {
         _id: req.params.id,
-        owner: req.user._id,
       },
       {
         name: req.body.name,
