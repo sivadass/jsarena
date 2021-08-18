@@ -10,6 +10,7 @@ const userRoute = require("./routes/user");
 const projectRoute = require("./routes/project");
 
 // Backend Port Number
+const environment = process.env.NODE_ENV || "deved";
 const PORT_NUMBER = process.env.PORT || 5003;
 
 // config env variables
@@ -27,7 +28,10 @@ mongoose
   .catch((err) => console.log(err));
 
 // Express Middlewares
-app.use(cors());
+console.log(environment);
+if (environment === "deved") {
+  app.use(cors());
+}
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/static", express.static(path.join(__dirname, "public")));
@@ -41,5 +45,5 @@ app.get("/", function (_, res) {
 });
 
 app.listen(PORT_NUMBER, () =>
-  console.log("🌍  => JS Console API server is on 🔥")
+  console.log("🌍  => JS Arena API server is on 🔥")
 );

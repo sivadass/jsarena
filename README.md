@@ -1,12 +1,12 @@
-# js-console
+# js-arena
 
 A minimal live code editor for Javascript.
 
-![JS Console Preview](./preview.png "JS Console Preview")
+![JS Arena Preview](./preview.png "JS Arena Preview")
 
 ### Live URL
 
-- [https://js-console.ml](https://js-console.ml)
+- [https://jsarena.dev](https://jsarena.dev)
 
 ### Development
 
