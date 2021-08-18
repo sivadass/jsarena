@@ -116,8 +116,8 @@ function main() {
   clearAllButton.getElementsByTagName("span")[0].innerText =
     OS === "MacOS" ? "CMD+L" : "CTRL+L";
   initializeHeader();
-  const { height } = codeColumn.getBoundingClientRect();
-  editor.setSize("100%", `${height - 36}px`);
+  const { height, width } = codeColumn.getBoundingClientRect();
+  editor.setSize(`${width - 1}px`, `${height - 36}px`);
   if (projectId) {
     readOnly = true;
     getData(`${process.env.API_URL}/project/${projectId}`)
