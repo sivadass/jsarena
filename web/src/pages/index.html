@@ -46,19 +46,6 @@
     <link rel="stylesheet" href="../styles/index.scss" />
     <link rel="stylesheet" href="../styles/codemirror.css" />
     <link rel="stylesheet" href="../styles/monokai.css" />
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-7R092VY3DE"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-7R092VY3DE");
-    </script>
   </head>
 
   <body id="root" class="index-page">
@@ -161,6 +148,18 @@
         <iframe id="output-iframe"></iframe>
       </div>
     </main>
-    <script type="module" src="../scripts/editor.js"></script>
+    <script type="module" src="../scripts/index.js"></script>
+    <script>
+      window["ga-disable-G-7R092VY3DE"] = process.env.DISABLE_GOOGLE_ANALYTICS;
+      window.ga =
+        window.ga ||
+        function () {
+          (ga.q = ga.q || []).push(arguments);
+        };
+      ga.l = +new Date();
+      ga("create", "G-7R092VY3DE", "auto");
+      ga("send", "pageview");
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
   </body>
 </html>
