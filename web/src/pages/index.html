@@ -46,6 +46,11 @@
     <link rel="stylesheet" href="../styles/index.scss" />
     <link rel="stylesheet" href="../styles/codemirror.css" />
     <link rel="stylesheet" href="../styles/monokai.css" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-7R092VY3DE"
+    ></script>
+    <script src="../scripts/utils/initializeGA.js"></script>
   </head>
 
   <body id="root" class="index-page">
@@ -149,18 +154,5 @@
       </div>
     </main>
     <script type="module" src="../scripts/index.js"></script>
-    <script>
-      window["ga-disable-G-7R092VY3DE"] =
-        process.env.DISABLE_GOOGLE_ANALYTICS === "true";
-      window.ga =
-        window.ga ||
-        function () {
-          (ga.q = ga.q || []).push(arguments);
-        };
-      ga.l = +new Date();
-      ga("create", "G-7R092VY3DE", "auto");
-      ga("send", "pageview");
-    </script>
-    <script async src="https://www.google-analytics.com/analytics.js"></script>
   </body>
 </html>

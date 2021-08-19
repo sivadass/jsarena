@@ -3,13 +3,18 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Unauthorized JS Arena</title>
+    <title>Unauthorized - JS Arena</title>
     <meta name="description" content="JS Live Code Editor" />
     <meta name="author" content="Sivadass N" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="../favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../styles/global.scss" />
     <link rel="stylesheet" href="../styles/error.scss" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-7R092VY3DE"
+    ></script>
+    <script src="../scripts/utils/initializeGA.js"></script>
   </head>
 
   <body>
@@ -30,18 +35,5 @@
       </div>
     </main>
     <script type="module" src="../scripts/unauthorized.js"></script>
-    <script>
-      window["ga-disable-G-7R092VY3DE"] =
-        process.env.DISABLE_GOOGLE_ANALYTICS === "true";
-      window.ga =
-        window.ga ||
-        function () {
-          (ga.q = ga.q || []).push(arguments);
-        };
-      ga.l = +new Date();
-      ga("create", "G-7R092VY3DE", "auto");
-      ga("send", "pageview");
-    </script>
-    <script async src="https://www.google-analytics.com/analytics.js"></script>
   </body>
 </html>
