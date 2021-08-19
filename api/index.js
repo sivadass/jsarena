@@ -10,7 +10,6 @@ const userRoute = require("./routes/user");
 const projectRoute = require("./routes/project");
 
 // Backend Port Number
-const environment = process.env.NODE_ENV || "development";
 const PORT_NUMBER = process.env.PORT || 5003;
 
 // config env variables
@@ -28,9 +27,7 @@ mongoose
   .catch((err) => console.log(err));
 
 // Express Middlewares
-if (environment === "development") {
-  app.use(cors());
-}
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/static", express.static(path.join(__dirname, "public")));

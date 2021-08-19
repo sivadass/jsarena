@@ -31,7 +31,8 @@
     </main>
     <script type="module" src="../scripts/unauthorized.js"></script>
     <script>
-      window["ga-disable-G-7R092VY3DE"] = process.env.DISABLE_GOOGLE_ANALYTICS;
+      window["ga-disable-G-7R092VY3DE"] =
+        process.env.DISABLE_GOOGLE_ANALYTICS === "true";
       window.ga =
         window.ga ||
         function () {
