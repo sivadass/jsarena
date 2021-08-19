@@ -8,7 +8,7 @@ function main() {
 function createNewProject() {
   return postData(`${process.env.API_URL}/project/`, {
     name: "testing-code",
-    code: `console.log("hello world")`,
+    code: `console.log("Hello World");`,
   }).then((data) => {
     const currentLocation = window.location.href;
     console.log("window.location.href", currentLocation);

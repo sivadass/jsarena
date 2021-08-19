@@ -58,7 +58,6 @@ router.post("/github-authorize", async (req, res) => {
           headers: profileHeaders,
         });
         const profileData = profileResponse && profileResponse.data;
-        console.log("profileData", profileData);
         if (profileData) {
           const existingUser = await User.findOne({ gId: profileData.id });
           if (existingUser) {
@@ -100,7 +99,6 @@ router.post("/github-authorize", async (req, res) => {
             }
           }
         } else {
-          console.log("unhandled case", profileResponse);
           res
             .status(400)
             .send({ error: "Unknown error occurred in Github auth" });

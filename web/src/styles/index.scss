@@ -15,6 +15,11 @@
     justify-content: space-between;
     align-items: center;
     padding: 6px 12px;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
     h4 {
       color: #999;
     }
@@ -51,6 +56,11 @@
     justify-content: space-between;
     align-items: center;
     padding: 6px 12px;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
     button {
       padding: 0 8px;
       height: 24px;

@@ -1,6 +1,6 @@
 import Toastify from "./toast";
 import { login } from "./common";
-const authToken = localStorage.getItem("authToken") || "";
+const authToken = localStorage.getItem("JSA_AuthToken") || "";
 export async function postData(url = "", data = {}) {
   const response = await fetch(url, {
     method: "POST",

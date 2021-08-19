@@ -21,13 +21,14 @@ const layoutSeparator = document.querySelector("div.layout-separator");
 const codeColumn = document.querySelector("div.code");
 const consoleColumn = document.querySelector("div.console");
 const projectNameField = document.querySelector("input.project-name");
-const user = localStorage.getItem("user");
+const user = localStorage.getItem("JSA_User");
 
 saveButton.addEventListener("click", saveCode);
 runButton.addEventListener("click", showPreview);
 runButtonEmpty.addEventListener("click", showPreview);
 clearAllButton.addEventListener("click", clearAll);
 shareButton.addEventListener("click", share);
+projectNameField.addEventListener("blur", saveProjectName);
 layoutSeparator.addEventListener("mousedown", resizeColumn);
 const urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
@@ -116,8 +117,8 @@ function main() {
   clearAllButton.getElementsByTagName("span")[0].innerText =
     OS === "MacOS" ? "CMD+L" : "CTRL+L";
   initializeHeader();
-  const { height, width } = codeColumn.getBoundingClientRect();
-  editor.setSize(`${width - 1}px`, `${height - 36}px`);
+  const { height } = codeColumn.getBoundingClientRect();
+  editor.setSize("100%", `${height - 36}px`);
   if (projectId) {
     readOnly = true;
     getData(`${process.env.API_URL}/project/${projectId}`)
@@ -133,6 +134,8 @@ function main() {
       });
   } else {
     const code = localStorage.getItem("JSA_Code") || "";
+    projectNameField.value =
+      localStorage.getItem("JSA_ProjectName") || "New Project";
     editor.setValue(code);
   }
 }
@@ -160,6 +163,15 @@ function share() {
     stopOnFocus: true,
     className: "toastify-success",
   }).showToast();
+}
+
+function saveProjectName() {
+  if (user) {
+    save();
+  } else {
+    const name = projectNameField.value;
+    localStorage.setItem("JSA_ProjectName", name);
+  }
 }
 
 function saveCode() {
@@ -191,6 +203,7 @@ function save() {
         .finally(() => {
           savingAnimation(false);
           localStorage.removeItem("JSA_Code");
+          localStorage.removeItem("JSA_ProjectName");
           readOnly = false;
         });
     } else {
@@ -287,8 +300,6 @@ function onMouseMove(e) {
 function onMouseUp() {
   isResizing = false;
 }
-
-console.log("==> ", readOnly);
 
 window.addEventListener("load", main, false);
 window.addEventListener("keydown", hotKeys, false);

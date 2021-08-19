@@ -8,7 +8,6 @@ module.exports = function auth(req, res, next) {
     req.user = verified;
     next();
   } catch (err) {
-    console.log("err in middleware", err);
     if (err.name === "TokenExpiredError") {
       return res.status(401).send("Unauthorized!");
     }

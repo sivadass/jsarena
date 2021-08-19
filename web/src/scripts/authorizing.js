@@ -12,8 +12,8 @@ function main() {
       .then((data) => {
         const token = data["authToken"];
         const user = jwt_decode(token);
-        localStorage.setItem("authToken", token);
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("JSA_AuthToken", token);
+        localStorage.setItem("JSA_User", JSON.stringify(user));
         window.location.href = "/";
       })
       .catch((err) => {

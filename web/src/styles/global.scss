@@ -43,11 +43,9 @@
           vertical-align: middle;
         }
       }
-      @media (max-width: 480x) {
-        &.account {
-          span {
-            display: none;
-          }
+      @media (max-width: 480px) {
+        span {
+          display: none;
         }
       }
     }

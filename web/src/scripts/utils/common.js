@@ -36,12 +36,11 @@ export const getOS = () => {
 };
 
 export const clearAuthData = () => {
-  localStorage.removeItem("user");
-  localStorage.removeItem("authToken");
+  localStorage.removeItem("JSA_User");
+  localStorage.removeItem("JSA_AuthToken");
 };
 
 export const login = () => {
-  console.log("goto login");
   clearAuthData();
   const loginURL = `https://github.com/login/oauth/authorize?scope=user&client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_REDIRECT_URI}`;
   window.location.href = loginURL;
@@ -58,7 +57,7 @@ export const initializeHeader = () => {
   const accountButton = document.querySelector("button.account");
   const accountLabel = accountButton.getElementsByTagName("span")[0];
   const accountDetails = document.querySelector(".account-details");
-  const user = localStorage.getItem("user");
+  const user = localStorage.getItem("JSA_User");
 
   const toggleAccountDropdown = () => {
     accountDetails.classList.toggle("open");

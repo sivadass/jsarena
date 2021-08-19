@@ -12,16 +12,14 @@ function login(e) {
     email: { value: emailVal },
     password: { value: passwordVal },
   } = form.elements;
-  console.log({ emailVal, passwordVal });
   return postData(`${process.env.API_URL}/user/login`, {
     email: emailVal,
     password: passwordVal,
   })
     .then((data) => {
-      console.log("login success", data.error);
+      console.log("login success");
     })
     .catch((err) => {
-      console.log("====>", err);
       authError.style.display = "block";
       authError.innerHTML = err;
     });
