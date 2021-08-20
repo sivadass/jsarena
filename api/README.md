@@ -1,4 +1,4 @@
-# JS Console Rest API Server
+# JS Arena Rest API Server
 
 Node JS based rest API server build with MongoDB
 
@@ -7,11 +7,11 @@ Node JS based rest API server build with MongoDB
 - Authentication
 - Role based authorization
 - Pagination
-- Crud Operation
+- CRUD Operation
 
 ## Demo
 
-[https://nest-iris.herokuapp.com/](https://nest-iris.herokuapp.com/)
+[https://jsarena.dev/api](https://jsarena.dev/api)
 
 ## Development
 
