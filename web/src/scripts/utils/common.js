@@ -51,6 +51,17 @@ export const logout = () => {
   window.location.href = "/";
 };
 
+export const getUserName = () => {
+  const user = localStorage.getItem("JSA_User");
+  if (user) {
+    const userData = JSON.parse(user);
+    return userData.name;
+  } else {
+    const randomId = Math.random() * (20 - 1) + 1;
+    return `Guest ${randomId}`;
+  }
+};
+
 export const initializeHeader = () => {
   const loginButton = document.querySelector("button.login");
   const logoutButton = document.querySelector("button.logout");

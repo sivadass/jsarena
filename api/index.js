@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const Sentry = require("@sentry/node");
-const Tracing = require("@sentry/tracing");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
@@ -49,7 +48,16 @@ app.get("/", function (_, res) {
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
 
-app.use(Sentry.Handlers.errorHandler());
+app.use(
+  Sentry.Handlers.errorHandler({
+    shouldHandleError(error) {
+      if ([400, 404, 414, 413, 500, 503].includes(error.statusCode)) {
+        return true;
+      }
+      return false;
+    },
+  })
+);
 
 app.listen(PORT_NUMBER, () =>
   console.log("🌍  => JS Arena API server is on 🔥")
