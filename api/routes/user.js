@@ -69,13 +69,13 @@ router.post("/github-authorize", async (req, res) => {
               },
               process.env.TOKEN_SECRET,
               {
-                expiresIn: "24h",
+                expiresIn: "720h",
               }
             );
             res.send({ authToken: token });
           } else {
             const user = new User({
-              name: profileData.name,
+              name: profileData.name || profileData.login || profileData.id,
               email: profileData.email || "",
               gId: profileData.id,
               role: "user",
