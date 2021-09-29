@@ -81,6 +81,9 @@ export function handleError(error) {
       window.location.href = "/not-found.html";
     }
     if (["Access denied!", "Unauthorized!"].includes(message)) {
+      if (message === "Unauthorized!") {
+        localStorage.setItem("JSA_LastURL", window.location.href);
+      }
       window.location.href = "/unauthorized.html";
     }
   }
