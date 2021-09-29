@@ -14,7 +14,8 @@ function main() {
         const user = jwt_decode(token);
         localStorage.setItem("JSA_AuthToken", token);
         localStorage.setItem("JSA_User", JSON.stringify(user));
-        window.location.href = "/";
+        const lastURL = localStorage.getItem("JSA_LastURL");
+        window.location.href = lastURL || "/";
       })
       .catch((err) => {
         console.error(err);

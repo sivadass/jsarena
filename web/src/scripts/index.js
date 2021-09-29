@@ -1,7 +1,12 @@
-import CodeMirror from "../scripts/codemirror/codemirror";
-import "../scripts/codemirror/addon/edit/closebrackets";
-import "../scripts/codemirror/mode/javascript";
+import * as Y from "yjs";
+import { CodemirrorBinding } from "y-codemirror";
+import { WebrtcProvider } from "y-webrtc";
+import CodeMirror from "codemirror";
+import "codemirror/mode/javascript/javascript.js";
+import "codemirror/addon/edit/closebrackets.js";
+import "codemirror/addon/comment/comment.js";
 import { putData, postData, getData, handleError } from "./utils/fetch";
+import { getUserName } from "./utils/common";
 import Toastify from "../scripts/utils/toast";
 import {
   hasAnything,
@@ -10,6 +15,7 @@ import {
   initializeHeader,
   login,
 } from "./utils/common";
+
 const saveButton = document.querySelector("button.save");
 const runButton = document.querySelector("button.run");
 const runButtonEmpty = document.querySelector("button.run-empty");
@@ -33,11 +39,17 @@ layoutSeparator.addEventListener("mousedown", resizeColumn);
 const urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
 
+const ydoc = new Y.Doc();
+const provider = new WebrtcProvider(`live-editor-${projectId}`, ydoc);
+const yText = ydoc.getText("codemirror");
+const yUndoManager = new Y.UndoManager(yText);
+
 let iframe = document.getElementById("output-iframe");
 let iframeWin = iframe.contentWindow || iframe;
 let consoleLogsContainer = document.getElementById("console-logs");
 let consoleLogsEmpty = document.getElementById("console-logs-empty");
 let panel = parent.document.getElementById("console-logs");
+let isPeersConnected = false;
 let isResizing = false;
 let readOnly = false;
 let animationDelay = -1;
@@ -88,7 +100,23 @@ var editor = CodeMirror.fromTextArea(jsCodeField, {
   indentWithTabs: true,
   autoCloseTags: true,
   autoCloseBrackets: true,
-  readOnly: readOnly,
+  mode: "javascript",
+});
+
+editor.setOption("readOnly", true);
+editor.setOption("extraKeys", {
+  "Cmd-/": function (cm) {
+    cm.toggleComment();
+  },
+});
+
+const binding = new CodemirrorBinding(yText, editor, provider.awareness, {
+  yUndoManager,
+});
+
+binding.awareness.setLocalStateField("user", {
+  color: "#4bf792",
+  name: getUserName(),
 });
 
 editor.on(
@@ -96,13 +124,11 @@ editor.on(
   debounce(() => save(), 1000)
 );
 
-// editor.on(
-//   "refresh",
-//   debounce(() => {
-//     const { height } = codeColumn.getBoundingClientRect();
-//     editor.setSize("100%", `${height - 36}px`);
-//   }, 1000)
-// );
+provider.on("synced", (status) => {
+  if (status?.synced) {
+    isPeersConnected = true;
+  }
+});
 
 function main() {
   const OS = getOS();
@@ -119,26 +145,33 @@ function main() {
   initializeHeader();
   const { height } = codeColumn.getBoundingClientRect();
   editor.setSize("100%", `${height - 36}px`);
-  if (projectId) {
-    readOnly = true;
-    getData(`${process.env.API_URL}/project/${projectId}`)
-      .then((data) => {
-        editor.setValue(data.code);
-        projectNameField.value = data.name;
-      })
-      .catch((err) => {
-        handleError(err);
-      })
-      .finally(() => {
-        readOnly = false;
-      });
-  } else {
+  if (!projectId) {
     const code = localStorage.getItem("JSA_Code") || "";
     projectNameField.value =
       localStorage.getItem("JSA_ProjectName") || "New Project";
     editor.setValue(code);
   }
+  setTimeout(() => {
+    fetchInitialData();
+  }, 3000);
 }
+
+const fetchInitialData = () => {
+  if (projectId && !isPeersConnected) {
+    return getData(`${process.env.API_URL}/project/${projectId}`)
+      .then((data) => {
+        editor.setValue(data.code);
+      })
+      .catch((err) => {
+        handleError(err);
+      })
+      .finally(() => {
+        editor.setOption("readOnly", false);
+      });
+  } else {
+    editor.setOption("readOnly", false);
+  }
+};
 
 function savingAnimation(isStart = true) {
   var elements = document.getElementsByTagName("animate");
@@ -184,7 +217,6 @@ function saveCode() {
 
 function save() {
   var jsCode = editor.getValue();
-  readOnly = true;
   if (user) {
     savingAnimation(true);
     if (!projectId) {
@@ -204,7 +236,6 @@ function save() {
           savingAnimation(false);
           localStorage.removeItem("JSA_Code");
           localStorage.removeItem("JSA_ProjectName");
-          readOnly = false;
         });
     } else {
       putData(`${process.env.API_URL}/project/${projectId}`, {
@@ -219,7 +250,6 @@ function save() {
         })
         .finally(() => {
           savingAnimation(false);
-          readOnly = false;
         });
     }
   } else {
