@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/sivadass/jsarena#readme",
   "dependencies": {
-    "@parcel/transformer-sass": "^2.0.0-rc.0",
+    "@parcel/transformer-sass": "2.0.0-rc.0",
     "jwt-decode": "^3.1.2",
     "codemirror": "^5.63.0",
     "y-codemirror": "^2.1.1",
