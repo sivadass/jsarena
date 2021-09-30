@@ -1,24 +1,24 @@
 {
-  "name": "js-console",
+  "name": "jsarena",
   "version": "0.0.1",
   "description": "Live code editor for JS",
   "scripts": {
     "start": "parcel serve ./src/pages/*.html",
-    "build": "npx parcel build ./src/pages/*.html"
+    "build": "parcel build ./src/pages/*.html"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sivadass/js-console.git"
+    "url": "git+https://github.com/sivadass/jsarena.git"
   },
   "author": "Sivadass N",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sivadass/js-console/issues"
+    "url": "https://github.com/sivadass/jsarena/issues"
   },
-  "homepage": "https://github.com/sivadass/js-console#readme",
+  "homepage": "https://github.com/sivadass/jsarena#readme",
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.0.0-rc.0",
-    "parcel": "latest"
+    "parcel": "latest",
+    "@parcel/transformer-sass": "^2.0.0-rc.0"
   },
   "dependencies": {
     "jwt-decode": "^3.1.2",
