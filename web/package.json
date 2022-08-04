@@ -28,6 +28,8 @@
     "parcel": "^2.7.0"
   },
   "alias": {
-    "process": "false"
+    "process": {
+      "global": "{}"
+    }
   }
 }
