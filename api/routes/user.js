@@ -39,13 +39,13 @@ router.post("/github-authorize", async (req, res) => {
       {
         client_id: process.env.GITHUB_CLIENT_ID,
         client_secret: process.env.GITHUB_CLIENT_SECRET,
-        redirect_uri: process.env.GITHUB_REDIRECT_URI,
         code: sessionCode,
       },
       {
         headers,
       }
     );
+    console.log("====> ", tokenResponse?.data);
     const data = tokenResponse.data;
     if (data.error === "bad_verification_code") {
       res.status(400).send(data);
