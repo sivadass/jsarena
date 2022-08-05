@@ -1,5 +1,4 @@
-window["ga-disable-G-7R092VY3DE"] =
-  process.env.DISABLE_GOOGLE_ANALYTICS === "true";
+window["ga-disable-G-7R092VY3DE"] = true;
 window.dataLayer = window.dataLayer || [];
 function gtag() {
   dataLayer.push(arguments);

@@ -26,10 +26,5 @@
   },
   "devDependencies": {
     "parcel": "^2.7.0"
-  },
-  "alias": {
-    "process": {
-      "global": "{}"
-    }
   }
 }
