@@ -22,6 +22,8 @@ Sentry.init({
   environment: process.env.NODE_ENV,
 });
 
+console.log("DB_CONNECT:", process.env.DB_CONNECT);
+
 // connect to db
 mongoose
   .connect(process.env.DB_CONNECT, {
