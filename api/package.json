@@ -4,7 +4,7 @@
   "description": "JS Arena API service",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon index.js",
+    "start:dev": "nodemon index.js --inspect",
     "start:prod": "node index.js"
   },
   "author": "Sivadass N",
