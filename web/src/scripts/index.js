@@ -40,7 +40,10 @@ const urlParams = new URLSearchParams(window.location.search);
 const projectId = urlParams.get("id") || "";
 
 const ydoc = new Y.Doc();
-const provider = new WebrtcProvider(`live-editor-${projectId}`, ydoc);
+const provider = new WebrtcProvider(`live-editor-${projectId}`, ydoc, {
+  signaling: ["wss://webrtc-poc.onrender.com"],
+});
+
 const yText = ydoc.getText("codemirror");
 const yUndoManager = new Y.UndoManager(yText);
 

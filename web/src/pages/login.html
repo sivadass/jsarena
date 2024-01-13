@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Login - JS Arena</title>
+    <meta name="description" content="JS Live Code Editor" />
+    <meta name="author" content="Sivadass N" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../styles/global.scss" />
+    <link rel="stylesheet" href="../styles/auth.scss" />
+    <script
+      src="https://cdn.counter.dev/script.js"
+      data-id="07c746b7-60de-4695-997e-7926213eb6b3"
+      data-utcoffset="6"
+    ></script>
+  </head>
+
+  <body>
+    <main class="main-container auth-page">
+      <div class="container">
+        <form action="" id="loginForm" class="auth-form">
+          <a class="brand" href="/">
+            <img src="../images/logo-black.svg" alt="JS Arena" />
+          </a>
+          <input
+            name="email"
+            type="email"
+            maxlength="64"
+            placeholder="Email Address"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <button type="submit" id="submitButton" class="login">Login</button>
+          <p id="errorMessage" class="error-message"></p>
+          <p class="link-message">
+            New user?
+            <a class="back" href="register.html"
+              ><span>Register here!</a>
+          </p>
+        </form>
+      </div>
+    </main>
+    <script type="module" src="../scripts/login.js"></script>
+  </body>
+</html>

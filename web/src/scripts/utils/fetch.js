@@ -1,6 +1,7 @@
 import Toastify from "./toast";
-import { login } from "./common";
+
 const authToken = localStorage.getItem("JSA_AuthToken") || "";
+
 export async function postData(url = "", data = {}) {
   const response = await fetch(url, {
     method: "POST",
@@ -13,12 +14,12 @@ export async function postData(url = "", data = {}) {
     },
     body: JSON.stringify(data),
   });
-  if (response.ok) {
-    return response.json();
+  const responseJSON = await response.json();
+  if (response.status >= 200 && response.status < 400) {
+    return responseJSON;
   } else {
-    return response.text().then((text) => {
-      throw new Error(text);
-    });
+    const errorMessage = responseJSON?.message || "Unknown error!";
+    return Promise.reject(new Error(errorMessage));
   }
 }
 

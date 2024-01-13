@@ -80,13 +80,13 @@ export const initializeHeader = () => {
     accountDetails.classList.toggle("open");
   };
 
-  loginButton.addEventListener("click", login);
+  // loginButton.addEventListener("click", login);
   logoutButton.addEventListener("click", logout);
   accountButton.addEventListener("click", toggleAccountDropdown);
 
   if (user) {
     const userData = JSON.parse(user);
-    loginButton.remove();
+    // loginButton.remove();
     accountLabel.textContent = userData.name;
   } else {
     accountButton.remove();

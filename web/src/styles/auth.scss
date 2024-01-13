@@ -1,0 +1,39 @@
+.auth-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand {
+  display: block;
+  img {
+    display: block;
+    width: 180px;
+    margin: 0 auto 32px auto;
+  }
+}
+
+.auth-form {
+  width: 300px;
+  input,
+  button {
+    display: block;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  button {
+    background: #f7e04b;
+  }
+  p {
+    text-align: center;
+    margin-top: 24px;
+    &.error-message {
+      color: #ff5722;
+    }
+    &.link-message {
+      a {
+        color: #d5bf02;
+      }
+    }
+  }
+}
